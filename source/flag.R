@@ -11,15 +11,13 @@ return(max)
 
 #Find out the allele which is shorter (with deletion)
 flagAllele<-function(seq){
-	ignoreList=vector('numeric')
+	ignoreList=vector('character')
 	normal=usualLength(seq)
-	for(i in 1:length(seq)){
+	for(i in names(seq)){
 		if(length(seq[[i]])<normal){
 			ignoreList=c(ignoreList, i)
 		}
 	}
 return(ignoreList)
 }
-
-
 
