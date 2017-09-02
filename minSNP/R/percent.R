@@ -1,4 +1,6 @@
 library(seqinr)
+#'
+
 
 similar <-function(seq){
 	a=seq[[1]][1598]
