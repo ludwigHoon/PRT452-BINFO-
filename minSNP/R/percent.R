@@ -1,19 +1,59 @@
-library(seqinr)
-#'
-
-
-similar <-function(seq){
-	a=seq[[1]][1598]
-	diff=0
-	same=0
-	for( i in 2:length(seq)){
-		if (seq[[i]][1598]!=a){
-		diff<-diff+1}
+#' \code{similar.percent} is used to find the calculate the percentage of 
+#' similarity at alleles.
+#' @inheritParams usualLength
+#' @params ref the specific allele to be identified.
+#' @examples 
+#' A_D213=chlamydia[[1]]
+#' similar.percent(chlamydia, 'A_D213')
+#' @return Will return the a list of SNPs that can be used 
+#' and the associated percentage at the particular location.
+#' \dontrun{
+#' similar.percent(a, b) where a is an allelic profiles 
+#' which have not been checked.
+#' }
+similar.percent <-function(seq, ref){
+	percentList=list()
+	target=match(ref, getName(seq))
+	
+	numSeq=length(seq)
+	numGene=length(seq[[target]])
+	
+	for(position in 1:numGene){
+		same=0
+		for (profile in 1:numSeq){
+			if(profile!=target){
+				if(seq[[target]][position]==seq[[profile]][position]){
+				same=same+1
+				}
+			}
+		}
+		percent= (1-(same/(length(seq)-1)))*100
+		percentList[[position]]=list(position=position, percent=percent)
 	}
-	for( i in 2:length(seq)){
-		if (seq[[i]][1598]==a){
-		same<-same+1}
-	}
-	print(c(diff, same, diff/(length(seq)-1)*100, same/(length(seq)-1)*100))
+	return (percentList)
 }
 
+#' \code{present.percent} is used to find present and filter the 
+#' similarity calculated using \code{similar.percent}.
+#' @params result the result from \code{similar.percent}.
+#' @params percent minimum percentage to be included
+#' @params number number of results to be displayed
+#' @examples 
+#' result=similar.percent(Chlamydia, 'A_D213')
+#' present.percent(result, 98, 100)
+#' @return Will return the a list of SNPs (as specified) that can be used 
+#' and the associated percentage at the particular location.
+
+library(rlist)
+present.percent <-function(result, percent=100, number=100){
+	result=list.sort(result, (percent))
+	if(number<length(result)){
+		result=result[1:number]
+	}
+	result2=list()
+	found=list.which(result, percent>=percent)
+	for(a in found){
+		result2[[a]]=list(result[[a]])
+	}
+	return(result2)
+}
