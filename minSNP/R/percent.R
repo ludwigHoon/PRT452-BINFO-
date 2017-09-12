@@ -15,6 +15,11 @@ similar.percent <-function(seq, ref){
 	percentList=list()
 	target=match(ref, getName(seq))
 	
+	if(is.na(target)){
+	print("Can't find reference in allelic profiles")
+	return(NULL)
+	}
+	
 	numSeq=length(seq)
 	numGene=length(seq[[target]])
 	
@@ -46,6 +51,10 @@ similar.percent <-function(seq, ref){
 
 library(rlist)
 present.percent <-function(result, percent=100, number=100){
+	if(percent>100){
+	print('Percent error')
+	return(NULL)
+	}
 	result=list.sort(result, (percent))
 	if(number<length(result)){
 		result=result[1:number]
@@ -53,7 +62,7 @@ present.percent <-function(result, percent=100, number=100){
 	result2=list()
 	found=list.which(result, percent>=percent)
 	for(a in found){
-		result2[[a]]=list(result[[a]])
+		result2[[a]]=result[[a]]
 	}
 	return(result2)
 }

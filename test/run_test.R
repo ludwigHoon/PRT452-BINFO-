@@ -1,7 +1,6 @@
 library('RUnit')
- 
-source('../source/flag.R')
- 
+library('seqinr')
+
 test.suite <- defineTestSuite('Testing',
 							dirs = file.path('.'),
                             testFileRegexp = '^unit.+\\.R',

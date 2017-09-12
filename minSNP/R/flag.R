@@ -35,3 +35,19 @@ flagAllele<-function(seq){
 return(ignoreList)
 }
 
+#' \code{processAllele} is used to returned the processed allelic
+#' profiles. 
+#' @inheritParams usualLength
+#' @examples 
+#' processAllele(Chlamydia)
+#' @return Will return the processed allelic profiles.
+processAllele<-function(seq){
+	ignore<-flagAllele(seq)
+	processed=seq
+	for (a in ignore){
+		processed[[a]]<-NULL
+	}
+	return(processed)
+}
+
+
