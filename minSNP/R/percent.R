@@ -1,7 +1,7 @@
 #' \code{similar.percent} is used to find the calculate the percentage of 
 #' similarity at alleles.
 #' @inheritParams usualLength
-#' @params ref the specific allele to be identified.
+#' @param ref the specific allele to be identified.
 #' @examples 
 #' A_D213=chlamydia[[1]]
 #' similar.percent(chlamydia, 'A_D213')
@@ -40,16 +40,16 @@ similar.percent <-function(seq, ref){
 
 #' \code{present.percent} is used to find present and filter the 
 #' similarity calculated using \code{similar.percent}.
-#' @params result the result from \code{similar.percent}.
-#' @params percent minimum percentage to be included
-#' @params number number of results to be displayed
+#' @param result the result from \code{similar.percent}.
+#' @param percent minimum percentage to be included
+#' @param number number of results to be displayed
 #' @examples 
 #' result=similar.percent(Chlamydia, 'A_D213')
 #' present.percent(result, 98, 100)
 #' @return Will return the a list of SNPs (as specified) that can be used 
 #' and the associated percentage at the particular location.
 
-library(rlist)
+
 present.percent <-function(result, percent=100, number=100){
 	if(percent>100){
 	print('Percent error')

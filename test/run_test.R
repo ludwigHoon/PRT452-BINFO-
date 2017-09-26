@@ -1,5 +1,4 @@
 library('RUnit')
-library('seqinr')
 
 test.suite <- defineTestSuite('Testing',
 							dirs = file.path('.'),

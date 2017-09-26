@@ -1,9 +1,9 @@
 Package: minSNP
-Title: What the Package Does (one line, title case)
+Title: Calculate minimum SNPs
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.4.1)
+Authors@R: person("Ludwig KianSoon", "Hoon", email = "ldwgkshoon@gmail.com", role = c("aut", "cre"))
+Description: This is a R implementation of minimum SNPs software as described in Price E.P., Inman-Bamber, J., Thiruvenkataswamy, V., Huygens, F and Giffard, P.M. 2007, Computer-aided identification of polymorphism sets diagnostic for groups of bacterial and viral genetic variants. BMC Bioinformatics 8:278.
+Depends: R (>= 3.4.1),rlist, seqinr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
