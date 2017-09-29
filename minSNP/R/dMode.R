@@ -1,12 +1,3 @@
-#' \code{similar.simpson} is used to find the calculate the percentage of 
-#' similarity at alleles.
-#' @inheritParams usualLength
-#' @param ref the specific allele to be identified.
-#' @examples 
-#' similar.simpson(chlamydia)
-#' @return Will return the a list of SNPs that can be used 
-#' and the associated percentage at the particular location.
-
 simpson.calculate<-function(pattern, N){
 	tsum=0
 	for(t in pattern){
