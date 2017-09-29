@@ -1,7 +1,7 @@
 library('RUnit')
 
 test.suite <- defineTestSuite('Testing',
-							dirs = file.path('.'),
+							dirs = file.path('.\tests'),
                             testFileRegexp = '^unit.+\\.R',
 							testFuncRegexp = '^test.+')
 
