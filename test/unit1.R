@@ -4,8 +4,8 @@
 # 2. Chlamydia_1.fas   --- (expecting 1 allele flagged - at position 1)
 # 3. Chlamydia_2.fas   --- (expecting 5 allele flagged - at position 1, 3, 56)
 	
-source('../minSNP/R/flag.R')
-
+#source('../minSNP/R/flag.R')
+library('minSNP')
 test.setUp <-function(){
 Chlamydia <<- read.fasta(file='../resource/Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas')
 ErrorFile1 <<- read.fasta(file='../resource/Chlamydia_1.fas')

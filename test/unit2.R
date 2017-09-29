@@ -2,8 +2,8 @@
 # Resources used to test:
 # 1. Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas
 
-source('../minSNP/R/percent.R')
-
+#source('../minSNP/R/percent.R')
+library('minSNP')
 test.setUp <-function(){
 Chlamydia<<- read.fasta(file='../resource/Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas')
 res<<-read.csv(file='../resource/result2.txt')
