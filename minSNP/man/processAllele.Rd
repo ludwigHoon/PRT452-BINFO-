@@ -18,6 +18,3 @@ Will return the processed allelic profiles.
 \code{processAllele} is used to returned the processed allelic
 profiles.
 }
-\examples{
-processAllele(Chlamydia)
-}

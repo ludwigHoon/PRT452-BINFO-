@@ -18,8 +18,3 @@ Will return the maximum length of all the allelic profiles.
 \code{usualLength} is used to find out 
 the length of the sequence (W/O deletion).
 }
-\examples{
-library(seqinr)
-chlamydia <- read.fasta('Chlamydia.fas')
-usualLength(chlamydia)
-}

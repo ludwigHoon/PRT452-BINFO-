@@ -22,7 +22,3 @@ and the associated percentage at the particular location.
 \code{present.percent} is used to find present and filter the 
 similarity calculated using \code{similar.percent}.
 }
-\examples{
-result=similar.percent(Chlamydia, 'A_D213')
-present.percent(result, 98, 100)
-}

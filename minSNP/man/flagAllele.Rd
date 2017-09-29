@@ -20,6 +20,3 @@ Will return a list of ignored allelic profiles.
 that has been flagged and will not be included in computation
 of minimum SNPs.
 }
-\examples{
-flagAllele(Chlamydia)
-}
