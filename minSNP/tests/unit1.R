@@ -7,9 +7,9 @@
 # source('../R/flag.R')
 #library('minSNP')
 test.setUp <-function(){
-Chlamydia <<- read.fasta(file='../data-raw/Chlamydia_mapped.txt')
-ErrorFile1 <<- read.fasta(file='../data-raw/Chlamydia_1.txt')
-ErrorFile2 <<- read.fasta(file='../data-raw/Chlamydia_2.txt')
+Chlamydia <<- read.fasta(file='../data/Chlamydia_mapped.txt')
+ErrorFile1 <<- read.fasta(file='../data/Chlamydia_1.txt')
+ErrorFile2 <<- read.fasta(file='../data/Chlamydia_2.txt')
 }
 
 test.usualLength <- function()

@@ -7,7 +7,7 @@ sample.case1 <-function(){
 	untempered <-read.fasta(file='../data/Chlamydia_mapped.txt')
 	
 	#Since Chlamydia is normal
-	checkIdentical(Chlamydia2, untempered)
+	checkIdentical(Chlamydia, untempered)
 	
 	#PERCENT MODE
 	result=similar.percent(Chlamydia, 'A_D213')
@@ -19,7 +19,23 @@ sample.case1 <-function(){
 	}
 	
 	#SIMPSON MODE
+	result=branch.simpson(Chlamydia, level=1, numRes=3)
+	output=present.simpson(Chlamydia, result)
 	
+	#Should have 3 results
+	checkTrue(length(output)==3)
+	
+	checkEquals(output[[1]]$'Index',  0.7344, tolerance=0.00016)
+	Description=paste('At position:', '1988', sep='-')
+	checkEquals(output[[1]]$'Description', Description)
+	
+	checkEquals(output[[2]]$'Index', 0.7318, tolerance=0.00016)
+	Description=paste('At position:', '2044', sep='-')
+	checkEquals(output[[2]]$'Description', Description)
+	
+	checkEquals(output[[3]]$'Index', 0.7266, tolerance=0.00016)
+	Description=paste('At position:', '2034', sep='-')
+	checkEquals(output[[3]]$'Description', Description)
 }
 
 sample.case2 <-function(){

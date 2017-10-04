@@ -2,4 +2,6 @@ language: r
 warnings_are_errors: false
 before_install:
   - cd minSNP
- 
+after_success:
+  - cd tests
+  - R CMD BATCH run_test.R
