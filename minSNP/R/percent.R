@@ -34,6 +34,7 @@ similar.percent <-function(seq, ref){
 
 #' \code{present.percent} is used to find present and filter the 
 #' similarity calculated using \code{similar.percent}.
+#' @import rlist
 #' @param result the result from \code{similar.percent}.
 #' @param percent minimum percentage to be included
 #' @param number number of results to be displayed
