@@ -1,12 +1,12 @@
-# Location of testing resources: ../resource/
+# Location of testing resources: ../data/
 # Resources used to test:
-# 1. Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas
+# 1. Chlamydia_mapped.txt
 
-#source('../minSNP/R/percent.R')
-library('minSNP')
+source('../R/percent.R')
+
 test.setUp <-function(){
-Chlamydia<<- read.fasta(file='../resource/Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas')
-res<<-read.csv(file='../resource/result2.txt')
+Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
+res<<-read.csv(file='../data/result2.txt')
 resp<<-list()
 for (a in 1:length(res[[1]])){
 resp[[a]]<<-list(position=res[[1]][a], percent=res[[2]][a])

@@ -1,15 +1,15 @@
-# Location of testing resources: ../resource/
+# Location of testing resources: ../data/
 # Resources used to test:
-# 1. Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas
-# 2. Chlamydia_1.fas   --- (expecting 1 allele flagged - at position 1)
-# 3. Chlamydia_2.fas   --- (expecting 5 allele flagged - at position 1, 3, 56)
+# 1. Chlamydia_mapped.txt
+# 2. Chlamydia_1.txt   --- (expecting 1 allele flagged - at position 1)
+# 3. Chlamydia_2.txt   --- (expecting 5 allele flagged - at position 1, 3, 56)
 	
-#source('../minSNP/R/flag.R')
-library('minSNP')
+source('../R/flag.R')
+
 test.setUp <-function(){
-Chlamydia <<- read.fasta(file='../resource/Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas')
-ErrorFile1 <<- read.fasta(file='../resource/Chlamydia_1.fas')
-ErrorFile2 <<- read.fasta(file='../resource/Chlamydia_2.fas')
+Chlamydia <<- read.fasta(file='../data/Chlamydia_mapped.txt')
+ErrorFile1 <<- read.fasta(file='../data/Chlamydia_1.txt')
+ErrorFile2 <<- read.fasta(file='../data/Chlamydia_2.txt')
 }
 
 test.usualLength <- function()

@@ -1,13 +1,11 @@
-# Location of testing resources: ../resource/
+# Location of testing resources: ../data/
 # Resources used to test:
-# 1. Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas
-# 2. Chlamydia_1.fas   --- (expecting 1 allele flagged - at position 1)
-# 3. Chlamydia_2.fas   --- (expecting 5 allele flagged - at position 1, 3, 56)
+# 1. Chlamydia_mapped.txt
 
-#source('../minSNP/R/dMode.R')
-library('minSNP')
+source('../R/dMode.R')
+
 test.setUp <-function(){
-Chlamydia<<- read.fasta(file='../resource/Chlamydia_mapped_Frankenstein_SNPs_Ns_to_Gs_oneofeachaussie.fas')
+Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
 }
 
 test.simpson.calculate <- function()
