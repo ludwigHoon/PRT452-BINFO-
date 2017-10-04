@@ -2,11 +2,11 @@
 # Resources used to test:
 # 1. Chlamydia_mapped.txt
 
-source('../R/percent.R')
-
+#source('../R/percent.R')
+library('minSNP')
 test.setUp <-function(){
 Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
-res<<-read.csv(file='../data/result2.txt')
+res<<-read.csv(file='../data/result.txt')
 resp<<-list()
 for (a in 1:length(res[[1]])){
 resp[[a]]<<-list(position=res[[1]][a], percent=res[[2]][a])
