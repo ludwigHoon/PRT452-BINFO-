@@ -5,7 +5,7 @@
 #source('../R/dMode.R')
 library('minSNP')
 test.setUp <-function(){
-Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
+Chlamydia<<- read.fasta(file='../data-raw/Chlamydia_mapped.txt')
 }
 
 test.simpson.calculate <- function()
@@ -127,5 +127,5 @@ test.present.simpson <- function()
 
 test.deactivation <- function()
 {
-  DEACTIVATED('Deactivating similar test function')
+  DEACTIVATED('Deactivating simpson test function')
 }

@@ -5,11 +5,11 @@
 # 3. Chlamydia_2.txt   --- (expecting 5 allele flagged - at position 1, 3, 56)
 	
 # source('../R/flag.R')
-library('minSNP')
+#library('minSNP')
 test.setUp <-function(){
-Chlamydia <<- read.fasta(file='../data/Chlamydia_mapped.txt')
-ErrorFile1 <<- read.fasta(file='../data/Chlamydia_1.txt')
-ErrorFile2 <<- read.fasta(file='../data/Chlamydia_2.txt')
+Chlamydia <<- read.fasta(file='../data-raw/Chlamydia_mapped.txt')
+ErrorFile1 <<- read.fasta(file='../data-raw/Chlamydia_1.txt')
+ErrorFile2 <<- read.fasta(file='../data-raw/Chlamydia_2.txt')
 }
 
 test.usualLength <- function()

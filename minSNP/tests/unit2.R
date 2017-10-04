@@ -5,8 +5,8 @@
 #source('../R/percent.R')
 library('minSNP')
 test.setUp <-function(){
-Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
-res<<-read.csv(file='../data/result.txt')
+Chlamydia<<- read.fasta(file='../data-raw/Chlamydia_mapped.txt')
+res<<-read.csv(file='../data-raw/result.txt')
 resp<<-list()
 for (a in 1:length(res[[1]])){
 resp[[a]]<<-list(position=res[[1]][a], percent=res[[2]][a])

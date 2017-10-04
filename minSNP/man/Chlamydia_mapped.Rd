@@ -3,11 +3,9 @@
 \docType{data}
 \name{Chlamydia_mapped}
 \alias{Chlamydia_mapped}
-\title{Normal Fasta file}
-\usage{
-data(Chlamydia_mapped)
-}
+\title{Normal Fasta sample file
+Chlamydia sequence types with no deletion}
 \description{
-The mapped genetic sequence of Chlamydia
+Normal Fasta sample file
+Chlamydia sequence types with no deletion
 }
-\keyword{datasets}

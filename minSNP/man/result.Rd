@@ -3,11 +3,9 @@
 \docType{data}
 \name{result}
 \alias{result}
-\title{Sample result from old program}
-\usage{
-data(result)
-}
+\title{Result file for validation
+Result from old software}
 \description{
-Result used to validate test
+Result file for validation
+Result from old software
 }
-\keyword{datasets}

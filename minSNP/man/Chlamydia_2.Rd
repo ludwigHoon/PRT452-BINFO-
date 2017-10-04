@@ -3,11 +3,9 @@
 \docType{data}
 \name{Chlamydia_2}
 \alias{Chlamydia_2}
-\title{Sample Fasta file with deletions}
-\usage{
-data(Chlamydia_2)
-}
+\title{Normal Fasta sample file
+Chlamydia sequence type with multiple deletions}
 \description{
-Expecting 5 allele flagged - at position 1, 3, 56
+Normal Fasta sample file
+Chlamydia sequence type with multiple deletions
 }
-\keyword{datasets}

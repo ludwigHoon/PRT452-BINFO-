@@ -2,8 +2,4 @@ language: r
 warnings_are_errors: false
 before_install:
   - cd minSNP
-  
-after_success:
-  - cd 'tests'
-  - R
-  - source('run_test.R')
+ 

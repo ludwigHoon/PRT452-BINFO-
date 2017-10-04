@@ -18,3 +18,18 @@ Will return the maximum length of all the allelic profiles.
 \code{usualLength} is used to find out 
 the length of the sequence (W/O deletion).
 }
+\examples{
+sample.case1 <-function(){
+	#Read the file
+	Chlamydia <- read.fasta(file='../data/Chlamydia_mapped.txt')
+	#Process the file
+	Chlamydia2 <- processAllele(Chlamydia)
+	untempered <-read.fasta(file='../data/Chlamydia_mapped.txt')
+	
+	#Since Chlamydia is normal
+	checkIdentical(Chlamydia2, untempered)
+}
+
+sample.case2 <-function(){
+}
+}

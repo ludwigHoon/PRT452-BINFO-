@@ -1,0 +1,50 @@
+<testsuites errors="12" failures="0" tests="13">
+  <testsuite errors="12" failures="0" name="minSNP RUnit Tests" tests="13">
+    <testcase name="test.deactivation">
+      <skipped/>
+    </testcase>
+    <testcase name="test.flag">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.processAllele">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.setUp">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.usualLength">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.deactivation">
+      <skipped/>
+    </testcase>
+    <testcase name="test.present.percent">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.setUp">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.similar.percent">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.branch.simpson">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.deactivation">
+      <skipped/>
+    </testcase>
+    <testcase name="test.present.simpson">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.setUp">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.similar.simpson">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+    <testcase name="test.simpson.calculate" time="0"/>
+    <testcase name="test.simpson.pattern">
+      <error message="Error in file(con, &quot;r&quot;) : cannot open the connection&#10;" type="ERROR"/>
+    </testcase>
+  </testsuite>
+</testsuites>
