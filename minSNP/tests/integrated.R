@@ -36,6 +36,8 @@ sample.case1 <-function(){
 	checkEquals(output[[3]]$'Index', 0.7266, tolerance=0.00016)
 	Description=paste('At position:', '2034', sep='-')
 	checkEquals(output[[3]]$'Description', Description)
+	
+	
 }
 
 sample.case2 <-function(){
