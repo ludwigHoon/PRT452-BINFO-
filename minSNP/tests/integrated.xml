@@ -1,6 +1,7 @@
-<testsuites errors="0" failures="0" tests="2">
-  <testsuite errors="0" failures="0" name="minSNP Integration Tests" tests="2">
-    <testcase name="sample.case1" time="29.07"/>
-    <testcase name="sample.case2" time="27.34"/>
+<testsuites errors="0" failures="0" tests="3">
+  <testsuite errors="0" failures="0" name="minSNP Integration Tests" tests="3">
+    <testcase name="sample.case1" time="31.83"/>
+    <testcase name="sample.case2" time="28.58"/>
+    <testcase name="sample.case3" time="28.95"/>
   </testsuite>
 </testsuites>
