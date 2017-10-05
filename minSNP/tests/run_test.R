@@ -1,4 +1,6 @@
 library('RUnit')
+library(seqinr)
+library(rlist)
 
 pkgname <- "minSNP"
 require(pkgname, quietly=TRUE, character.only=TRUE) || stop("package '", pkgname, "' not found")
@@ -18,7 +20,7 @@ printJUnitProtocol(result, fileName="junit.xml")
 
 suite2 <- defineTestSuite(name=paste(pkgname, "Integration Tests"),
                          dirs=dir,
-                         testFileRegexp='^integrated.+\\.R',
+                         testFileRegexp='^integrated\\.R',
                          testFuncRegexp = '^sample.+',
                          rngKind="default",
                          rngNormalKind="default")

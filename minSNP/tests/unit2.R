@@ -3,7 +3,7 @@
 # 1. Chlamydia_mapped.txt
 
 #source('../R/percent.R')
-library('minSNP')
+
 test.setUp <-function(){
 Chlamydia<<- read.fasta(file='../data/Chlamydia_mapped.txt')
 res<<-read.csv(file='../data/result.txt')

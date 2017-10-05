@@ -4,8 +4,10 @@
 \name{Chlamydia_1}
 \alias{Chlamydia_1}
 \title{Normal Fasta sample file
-Chlamydia sequence type with 1 deletion}
+Chlamydia sequence type with 1 deletion
+at 1}
 \description{
 Normal Fasta sample file
 Chlamydia sequence type with 1 deletion
+at 1
 }
