@@ -2,10 +2,3 @@ language: r
 warnings_are_errors: false
 before_install:
   - cd minSNP
-  - cd tests
-  - R CMD BATCH run_test.R
-  - cd ..
-after_success:
-  - cd tests
-  - echo junit.xml
-  - echo integrated.xml
