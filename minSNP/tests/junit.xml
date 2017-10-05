@@ -3,23 +3,23 @@
     <testcase name="test.deactivation">
       <skipped/>
     </testcase>
-    <testcase name="test.flag" time="0.45"/>
-    <testcase name="test.processAllele" time="0.43"/>
-    <testcase name="test.setUp" time="0.45"/>
-    <testcase name="test.usualLength" time="0.38"/>
+    <testcase name="test.flag" time="0.39"/>
+    <testcase name="test.processAllele" time="0.36"/>
+    <testcase name="test.setUp" time="0.36"/>
+    <testcase name="test.usualLength" time="0.37"/>
     <testcase name="test.deactivation">
       <skipped/>
     </testcase>
-    <testcase name="test.present.percent" time="3.11"/>
+    <testcase name="test.present.percent" time="3.16"/>
     <testcase name="test.setUp" time="0.13"/>
-    <testcase name="test.similar.percent" time="3.14"/>
-    <testcase name="test.branch.simpson" time="162.47"/>
+    <testcase name="test.similar.percent" time="3.64"/>
+    <testcase name="test.branch.simpson" time="160.87"/>
     <testcase name="test.deactivation">
       <skipped/>
     </testcase>
-    <testcase name="test.present.simpson" time="83.86"/>
-    <testcase name="test.setUp" time="0.12"/>
-    <testcase name="test.similar.simpson" time="93.11"/>
+    <testcase name="test.present.simpson" time="91.42"/>
+    <testcase name="test.setUp" time="0.13"/>
+    <testcase name="test.similar.simpson" time="93.7"/>
     <testcase name="test.simpson.calculate" time="0"/>
     <testcase name="test.simpson.pattern" time="0.12"/>
   </testsuite>
