@@ -4,6 +4,7 @@
 #' use read.fasta from seqinr to import the fasta file.
 #' @param ref the specific allele to be identified.
 #' @return Will return the a list of SNPs that can be used
+#' @export
 similar.percent <-function(seq, ref){
 	percentList=list()
 	target=match(ref, getName(seq))
@@ -39,6 +40,7 @@ similar.percent <-function(seq, ref){
 #' @param number number of results to be displayed
 #' @return Will return the a list of SNPs (as specified) that can be used 
 #' and the associated percentage at the particular location.
+#' @export
 present.percent <-function(result, percent=100, number=100){
 	if(percent>100){
 	print('Percent error')

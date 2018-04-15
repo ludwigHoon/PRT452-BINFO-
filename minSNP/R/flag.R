@@ -4,6 +4,7 @@
 #' use read.fasta from seqinr to import the fasta file.
 #' @return Will return the maximum length of all the allelic profiles.
 #' @example tests/integrated.R
+#' @export
 usualLength<-function(seq){
 	max=length(seq[[1]])
 	for(i in 2:length(seq)){
@@ -19,6 +20,7 @@ return(max)
 #' of minimum SNPs. 
 #' @inheritParams usualLength
 #' @return Will return a list of ignored allelic profiles.
+#' @export
 flagAllele<-function(seq){
 	ignoreList=vector('character')
 	normal=usualLength(seq)
@@ -34,6 +36,7 @@ return(ignoreList)
 #' profiles. 
 #' @inheritParams usualLength
 #' @return Will return the processed allelic profiles.
+#' @export
 processAllele<-function(seq){
 	ignore<-flagAllele(seq)
 	processed=seq
