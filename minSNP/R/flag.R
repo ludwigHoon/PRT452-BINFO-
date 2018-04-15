@@ -47,4 +47,13 @@ processAllele<-function(seq){
 	return(processed)
 }
 
+#' \code{readFasta} is used to read fasta file
+#' @import seqinr
+#' @param file file path
+#' @return Will return fastaDNA.
+#' @export
+readFasta<-function(file){
+    return(read.fasta(file))
+}
+
 
