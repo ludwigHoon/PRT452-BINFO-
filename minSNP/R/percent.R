@@ -26,7 +26,7 @@ similar.percent <-function(seq, ref){
 				}
 			}
 		}
-		percent= (1-(same/(length(seq)-1)))*100
+		percent= (1-((same-1)/(length(seq)-1)))*100
 		percentList[[position]]=list(position=position, percent=percent)
 	}
 	return (percentList)

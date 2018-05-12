@@ -6,13 +6,24 @@
 #' @example tests/integrated.R
 #' @export
 usualLength<-function(seq){
-	max=length(seq[[1]])
-	for(i in 2:length(seq)){
-		if(max<length(seq[[i]])){
-			max=length(seq[[i]])
+	seqLen=list()
+	for (i in 1:length(seq)){
+		if( !(as.character(length(seq[[i]])) %in% names(seqLen)) ){
+			seqLen[[ as.character(length(seq[[i]])) ]]=1
+		}
+		else{
+			seqLen[[ as.character(length(seq[[i]])) ]]= seqLen[[ as.character(length(seq[[i]])) ]]+1
 		}
 	}
-return(max)
+	maxInd=0
+	max=0
+	for (i in names(seqLen))	{
+		if(seqLen[[i]]>max){
+			maxInd=as.numeric(i)
+			max=seqLen[[i]]
+		}
+	}
+return(maxInd)
 }
 
 #' \code{flagAllele} is used to find out a list of allelic profiles
