@@ -36,7 +36,7 @@ flagAllele<-function(seq){
 	ignoreList=vector('character')
 	normal=usualLength(seq)
 	for(i in names(seq)){
-		if(length(seq[[i]])<normal){
+		if(length(seq[[i]])!=normal){
 			ignoreList=c(ignoreList, i)
 		}
 	}
@@ -56,6 +56,29 @@ processAllele<-function(seq){
 		processed[[a]]<-NULL
 	}
 	return(processed)
+}
+
+#' \code{flagPosition} is used to find out positions that 
+#' will be ignored in calculation (either not A,C,G,T or '-')
+#' @param proSeq Sequences after processed, i.e. all with the same length
+#' @param dashIgnore whether to treat '-' as another type
+#' @return Will return a list of positions that need to be ignored.
+#' @export
+flagPosition<-function(proSeq, dashIgnore=TRUE){
+	acceptedChar=c("A","a","C","c","T","t","G","g")
+	ignoredPos=vector('numeric')
+	if (dashIgnore==FALSE) acceptedChar=c(acceptedChar, "-")
+	
+	for (i in 1:length(proSeq[[1]])){
+		for (i2 in 1:length(proSeq)){
+			if( !is.element(proSeq[[i2]][i],acceptedChar) ){
+				ignoredPos=c(ignoredPos,i)
+				break
+			}
+
+		}
+	}
+	return(ignoredPos)
 }
 
 #' \code{readFasta} is used to read fasta file

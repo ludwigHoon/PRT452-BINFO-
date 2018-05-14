@@ -35,6 +35,24 @@ test.flag <- function()
 	checkIdentical(flagAllele(ErrorFile2), c('A_D213', 'Ia_SotoGIa3', 'D_SotoGD1'))	
 }
 
+test.flagPosition <- function()
+{
+	test.setUp()
+
+	#When the sequence within test file are all valid characters
+	checkIdentical(flagPosition(Chlamydia), vector('numeric'))
+
+	#When there are invalid characters
+	checkIdentical(flagPosition(processAllele(ErrorFile1)), c(22,24))
+	#When there are invalid characters, but dash treated as a type
+	checkIdentical(flagPosition(processAllele(ErrorFile1), FALSE), c(22))
+
+	#When there are invalid characters
+	checkIdentical(flagPosition(processAllele(ErrorFile2)), c(1,2,3,4))
+	#When there are invalid characters, but dash treated as a type
+	checkIdentical(flagPosition(processAllele(ErrorFile2), FALSE), c(1,2))
+}
+
 test.processAllele <- function()
 {
 	test.setUp()
