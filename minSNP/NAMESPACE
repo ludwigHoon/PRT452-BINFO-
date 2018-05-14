@@ -2,6 +2,7 @@
 
 export(branch.simpson)
 export(flagAllele)
+export(flagPosition)
 export(present.percent)
 export(present.simpson)
 export(processAllele)
