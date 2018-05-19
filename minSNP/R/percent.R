@@ -26,11 +26,14 @@ similar.percent <-function(seq, ref){
 				}
 			}
 		}
-		percent= (1-((same-1)/(length(seq)-1)))*100
+		percent= (1-((same)/(length(seq)-1)))*100
 		percentList[[position]]=list(position=position, percent=percent)
 	}
 	return (percentList)
 }
+
+#' \code{}
+#branch.percent <- function()
 
 #' \code{present.percent} is used to find present and filter the 
 #' similarity calculated using \code{similar.percent}.

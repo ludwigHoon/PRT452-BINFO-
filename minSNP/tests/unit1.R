@@ -69,7 +69,7 @@ test.processAllele <- function()
 	checkEqualsNumeric(length(processAllele(ErrorFile2)), 53)
 }
 
-test.deactivation <- function()
+test.tearDown <- function()
 {
-  DEACTIVATED('Deactivating flag test function')
+  #DEACTIVATED('Deactivating flag test function')
 }

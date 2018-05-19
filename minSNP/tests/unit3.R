@@ -119,20 +119,23 @@ test.present.simpson <- function()
 	checkTrue(length(output)==3)
 	
 	#Check the result at 1st level for the 3 outputs
-	checkEquals(output[[1]]$'Index', result[[1]][[3]]$'index')
+	indDescription=paste('', round(result[[1]][[1]]$'index',4), round(result[[1]][[2]]$'index',4), round(result[[1]][[3]]$'index',4), sep=" ")
+	checkEquals(output[[1]]$'Index', indDescription)
 	Description=paste('At position:', result[[1]][[1]]$'position', result[[1]][[2]]$'position', result[[1]][[3]]$'position', sep='-')
 	checkEquals(output[[1]]$'Description', Description)
 	
-	checkEquals(output[[2]]$'Index', result[[2]][[3]]$'index')
+	indDescription=paste('', round(result[[2]][[1]]$'index',4), round(result[[2]][[2]]$'index',4), round(result[[2]][[3]]$'index',4), sep=" ")
+	checkEquals(output[[2]]$'Index', indDescription)
 	Description=paste('At position:', result[[2]][[1]]$'position', result[[2]][[2]]$'position', result[[2]][[3]]$'position', sep='-')
 	checkEquals(output[[2]]$'Description', Description)
 	
-	checkEquals(output[[3]]$'Index', result[[3]][[3]]$'index')
+	indDescription=paste('', round(result[[3]][[1]]$'index',4), round(result[[3]][[2]]$'index',4), round(result[[3]][[3]]$'index',4), sep=" ")
+	checkEquals(output[[3]]$'Index', indDescription)
 	Description=paste('At position:', result[[3]][[1]]$'position', result[[3]][[2]]$'position', result[[3]][[3]]$'position', sep='-')
 	checkEquals(output[[3]]$'Description', Description)
 }
 
-test.deactivation <- function()
+test.tearDown <- function()
 {
-  DEACTIVATED('Deactivating simpson test function')
+  #DEACTIVATED('Deactivating simpson test function')
 }

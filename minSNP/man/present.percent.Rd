@@ -2,7 +2,8 @@
 % Please edit documentation in R/percent.R
 \name{present.percent}
 \alias{present.percent}
-\title{\code{present.percent} is used to find present and filter the 
+\title{\code{}
+\code{present.percent} is used to find present and filter the 
 similarity calculated using \code{similar.percent}.}
 \usage{
 present.percent(result, percent = 100, number = 100)
@@ -19,6 +20,7 @@ Will return the a list of SNPs (as specified) that can be used
 and the associated percentage at the particular location.
 }
 \description{
+\code{}
 \code{present.percent} is used to find present and filter the 
 similarity calculated using \code{similar.percent}.
 }

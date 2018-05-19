@@ -133,9 +133,12 @@ present.simpson <-function(seq, result){
 	for (num in 1:numRes){
 	appended=list()
 	descrip='At position:'
+	indexDescrip=''
 	for (lvl in 1:level){
 			po=result[[num]][[lvl]]$'position'
 			descrip=paste(descrip, po, sep='-')
+			ind=round(result[[num]][[lvl]]$'index', 4)
+			indexDescrip=paste(indexDescrip, ind, sep=' ')
 			for (al in 1:length(seq)){
 				appended[[getName(seq[[al]])]]=paste(appended[[getName(seq[[al]])]], seq[[al]][po], sep="")
 			}
@@ -145,7 +148,7 @@ present.simpson <-function(seq, result){
 		type[[appended[[a]]]]=c(type[[appended[[a]]]], names(appended)[a])
 	}
 	type[['Description']]=descrip
-	type[['Index']]=result[[num]][[level]]$'index'
+	type[['Index']]=indexDescrip
 	output[[num]]=type
 	}
 	return(output)

@@ -53,7 +53,7 @@ test.present.percent <- function()
 	}
 }
 
-test.deactivation <- function()
+test.tearDown <- function()
 {
-  DEACTIVATED('Deactivating similar test function')
+  #DEACTIVATED('Deactivating similar test function')
 }

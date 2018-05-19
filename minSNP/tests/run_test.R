@@ -16,7 +16,7 @@ suite <- defineTestSuite(name=paste(pkgname, "RUnit Tests"),
                          rngNormalKind="default")
 result <- runTestSuite(suite)
 printTextProtocol(result)
-printJUnitProtocol(result, fileName="junit.xml")
+printJUnitProtocol(result, fileName="runit.xml")
 
 suite2 <- defineTestSuite(name=paste(pkgname, "Integration Tests"),
                          dirs=dir,

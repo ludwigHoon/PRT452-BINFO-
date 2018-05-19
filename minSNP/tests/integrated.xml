@@ -1,7 +1,13 @@
-<testsuites errors="0" failures="0" tests="3">
-  <testsuite errors="0" failures="0" name="minSNP Integration Tests" tests="3">
-    <testcase name="sample.case1" time="31.83"/>
-    <testcase name="sample.case2" time="28.58"/>
-    <testcase name="sample.case3" time="28.95"/>
+<testsuites errors="0" failures="3" tests="3">
+  <testsuite errors="0" failures="3" name="minSNP Integration Tests" tests="3">
+    <testcase name="sample.case1">
+      <failure message="Error in checkEquals(output[[1]]$Index, indDescription) : &#10;  1 string mismatch&#10;&#10;" type="FAILURE"/>
+    </testcase>
+    <testcase name="sample.case2">
+      <failure message="Error in checkEquals(present[[1]]$position, 171) : &#10;  Mean relative difference: 6.772727&#10;&#10;" type="FAILURE"/>
+    </testcase>
+    <testcase name="sample.case3">
+      <failure message="Error in checkEquals(present[[1]]$position, 171) : &#10;  Mean relative difference: 170&#10;&#10;" type="FAILURE"/>
+    </testcase>
   </testsuite>
 </testsuites>
