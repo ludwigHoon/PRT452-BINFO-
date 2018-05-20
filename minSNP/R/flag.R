@@ -78,6 +78,7 @@ flagPosition<-function(proSeq, dashIgnore=TRUE){
 
 		}
 	}
+	print(paste('Ignored Positions:', toString(ignoredPos)))
 	return(ignoredPos)
 }
 
