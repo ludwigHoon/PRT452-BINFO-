@@ -2,25 +2,16 @@
 % Please edit documentation in R/percent.R
 \name{present.percent}
 \alias{present.percent}
-\title{\code{}
-\code{present.percent} is used to find present and filter the 
-similarity calculated using \code{similar.percent}.}
+\title{\code{present.percent} is used to present the result of percent calculation.}
 \usage{
-present.percent(result, percent = 100, number = 100)
+present.percent(result)
 }
 \arguments{
-\item{result}{the result from \code{similar.percent}.}
-
-\item{percent}{minimum percentage to be included}
-
-\item{number}{number of results to be displayed}
+\item{result}{the result from \code{branch.percent}}
 }
 \value{
-Will return the a list of SNPs (as specified) that can be used 
-and the associated percentage at the particular location.
+Will print out the result
 }
 \description{
-\code{}
-\code{present.percent} is used to find present and filter the 
-similarity calculated using \code{similar.percent}.
+\code{present.percent} is used to present the result of percent calculation.
 }

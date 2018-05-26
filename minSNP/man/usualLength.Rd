@@ -26,7 +26,8 @@ sample.case1 <-function(){
 	#STEP 1. Process the file
 	Chlamydia <- processAllele(Chlamydia)
 	untempered <-read.fasta(file='../data/Chlamydia_mapped.txt')
-	
+	excPosition <- flagPosition(Chlamydia)
+
 	#Since Chlamydia is normal
 	checkIdentical(Chlamydia, untempered)
 	
@@ -40,121 +41,130 @@ sample.case1 <-function(){
 	}
 	
 	#SIMPSON MODE
-	result=branch.simpson(Chlamydia, level=1, numRes=3)
+	result=branch.simpson(Chlamydia, level=1, numRes=3, excluded=excPosition)
 	output=present.simpson(Chlamydia, result)
 	
 	#Should have 3 results
 	checkTrue(length(output)==3)
 	
-	checkEquals(output[[1]]$'Index',  0.7344, tolerance=0.00016)
+	indDescription=paste('', ' 0.7344', sep=' ')
+	checkEquals(output[[1]]$'Index',  indDescription)
 	Description=paste('At position:', '1988', sep='-')
 	checkEquals(output[[1]]$'Description', Description)
 	
-	checkEquals(output[[2]]$'Index', 0.7318, tolerance=0.00016)
+	indDescription=paste('', ' 0.7318', sep=' ')
+	checkEquals(output[[1]]$'Index',  indDescription)
 	Description=paste('At position:', '2044', sep='-')
 	checkEquals(output[[2]]$'Description', Description)
 	
-	checkEquals(output[[3]]$'Index', 0.7266, tolerance=0.00016)
+	indDescription=paste('', ' 0.7266', sep=' ')
+	checkEquals(output[[1]]$'Index',  indDescription)
 	Description=paste('At position:', '2034', sep='-')
 	checkEquals(output[[3]]$'Description', Description)
 }
 
-sample.case2 <-function(){
-	#Read the file
-	Chlamydia <- read.fasta(file='../data/Chlamydia_1.txt')
+# sample.case2 <-function(){
+# 	#Read the file
+# 	Chlamydia <- read.fasta(file='../data/Chlamydia_1.txt')
 	
-	#STEP 1. Process the file
-	Chlamydia <- processAllele(Chlamydia)
+# 	#STEP 1. Process the file
+# 	Chlamydia <- processAllele(Chlamydia)
 	
-	#Since 1 sequence has deletion and is ignored
-	checkEquals(length(Chlamydia), 55)
+# 	#Since 1 sequence has deletion and is ignored
+# 	checkEquals(length(Chlamydia), 55)
 	
-	#PERCENT MODE
-	result=similar.percent(Chlamydia, 'A_D213')
-	present=present.percent(result, 98, 100)
+# 	#PERCENT MODE
+# 	result=similar.percent(Chlamydia, 'A_D213')
+# 	present=present.percent(result, 98, 100)
 	
-	#Should have no result because A_D213 is ignored
-	checkEquals(result, NULL)
-	checkEquals(present, list())
+# 	#Should have no result because A_D213 is ignored
+# 	checkEquals(result, NULL)
+# 	checkEquals(present, list())
 	
-	#PERCENT MODE
-	result=similar.percent(Chlamydia, 'H_S1432')
-	present=present.percent(result, 98, 100)
+# 	#PERCENT MODE
+# 	result=similar.percent(Chlamydia, 'H_S1432')
+# 	present=present.percent(result, 98, 100)
 	
-	#Check result
-	checkEquals(length(present), 100)
-	checkEquals(present[[1]]$'position', 171)
-	checkEquals(present[[1]]$'percent', 100)	
+# 	#Check result
+# 	checkEquals(length(present), 100)
+# 	checkEquals(present[[1]]$'position', 171)
+# 	checkEquals(present[[1]]$'percent', 100)	
 	
-	#SIMPSON MODE
-	result=branch.simpson(Chlamydia, level=1, numRes=3)
-	output=present.simpson(Chlamydia, result)
+# 	#SIMPSON MODE
+# 	result=branch.simpson(Chlamydia, level=1, numRes=3)
+# 	output=present.simpson(Chlamydia, result)
 	
-	#Should have 3 results
-	checkTrue(length(output)==3)
+# 	#Should have 3 results
+# 	checkTrue(length(output)==3)
 	
-	checkEquals(output[[1]]$'Index',  0.7347, tolerance=0.00016)
-	Description=paste('At position:', '1988', sep='-')
-	checkEquals(output[[1]]$'Description', Description)
+# 	indDescription=paste('', '0.7347', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '1988', sep='-')
+# 	checkEquals(output[[1]]$'Description', Description)
 	
-	checkEquals(output[[2]]$'Index', 0.7306, tolerance=0.00016)
-	Description=paste('At position:', '2044', sep='-')
-	checkEquals(output[[2]]$'Description', Description)
+# 	indDescription=paste('', '0.7306', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '2044', sep='-')
+# 	checkEquals(output[[2]]$'Description', Description)
 	
-	checkEquals(output[[3]]$'Index', 0.7199, tolerance=0.00016)
-	Description=paste('At position:', '2034', sep='-')
-	checkEquals(output[[3]]$'Description', Description)
-}
+# 	indDescription=paste('', '0.7199', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '2034', sep='-')
+# 	checkEquals(output[[3]]$'Description', Description)
+# }
 
-sample.case3 <-function(){
-	#Read the file
-	Chlamydia <- read.fasta(file='../data/Chlamydia_2.txt')
+# sample.case3 <-function(){
+# 	#Read the file
+# 	Chlamydia <- read.fasta(file='../data/Chlamydia_2.txt')
 	
-	#STEP 1. Process the file
-	Chlamydia <- processAllele(Chlamydia)
+# 	#STEP 1. Process the file
+# 	Chlamydia <- processAllele(Chlamydia)
 	
-	#Since 1 sequence has deletion and is ignored
-	checkEquals(length(Chlamydia), 53)
+# 	#Since 1 sequence has deletion and is ignored
+# 	checkEquals(length(Chlamydia), 53)
 	
-	#PERCENT MODE
-	result=similar.percent(Chlamydia, 'A_D213')
-	present=present.percent(result, 98, 100)
+# 	#PERCENT MODE
+# 	result=similar.percent(Chlamydia, 'A_D213')
+# 	present=present.percent(result, 98, 100)
 	
-	#Should have no result because A_D213 is ignored
-	checkEquals(result, NULL)
-	checkEquals(present, list())
+# 	#Should have no result because A_D213 is ignored
+# 	checkEquals(result, NULL)
+# 	checkEquals(present, list())
 	
-	#PERCENT MODE
-	result=similar.percent(Chlamydia, 'H_S1432')
-	present=present.percent(result, 98, 100)
+# 	#PERCENT MODE
+# 	result=similar.percent(Chlamydia, 'H_S1432')
+# 	present=present.percent(result, 98, 100)
 	
-	#Check result
-	checkEquals(length(present), 100)
-	checkEquals(present[[1]]$'position', 171)
-	checkEquals(present[[1]]$'percent', 100)	
+# 	#Check result
+# 	checkEquals(length(present), 100)
+# 	checkEquals(present[[1]]$'position', 171)
+# 	checkEquals(present[[1]]$'percent', 100)	
 	
-	#SIMPSON MODE
-	result=branch.simpson(Chlamydia, level=1, numRes=3)
-	output=present.simpson(Chlamydia, result)
+# 	#SIMPSON MODE
+# 	result=branch.simpson(Chlamydia, level=1, numRes=3)
+# 	output=present.simpson(Chlamydia, result)
 	
-	#Should have 3 results
-	checkTrue(length(output)==3)
+# 	#Should have 3 results
+# 	checkTrue(length(output)==3)
 	
-	checkEquals(output[[1]]$'Index',  0.7343, tolerance=0.00016)
-	Description=paste('At position:', '2044', sep='-')
-	checkEquals(output[[1]]$'Description', Description)
+# 	indDescription=paste('', '0.7343', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '2044', sep='-')
+# 	checkEquals(output[[1]]$'Description', Description)
 	
-	checkEquals(output[[2]]$'Index', 0.7329, tolerance=0.00016)
-	Description=paste('At position:', '1988', sep='-')
-	checkEquals(output[[2]]$'Description', Description)
+# 	indDescription=paste('', '0.7329', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '1988', sep='-')
+# 	checkEquals(output[[2]]$'Description', Description)
 	
-	checkEquals(output[[3]]$'Index', 0.7263, tolerance=0.00016)
-	Description=paste('At position:', '2034', sep='-')
-	checkEquals(output[[3]]$'Description', Description)
-}
+# 	indDescription=paste('', '0.7263', sep=' ')
+# 	checkEquals(output[[1]]$'Index',  indDescription)
+# 	Description=paste('At position:', '2034', sep='-')
+# 	checkEquals(output[[3]]$'Description', Description)
+# }
 
-test.deactivation <- function()
-{
-  DEACTIVATED('Deactivating integration test function')
-}
+# test.deactivation <- function()
+# {
+#   DEACTIVATED('Deactivating integration test function')
+# }
 }

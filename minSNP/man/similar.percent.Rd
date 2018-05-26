@@ -2,21 +2,25 @@
 % Please edit documentation in R/percent.R
 \name{similar.percent}
 \alias{similar.percent}
-\title{\code{similar.percent} is used to find the calculate the percentage of 
-similarity at alleles.}
+\title{\code{similar.percent} is used to calculate the percentage of dissimilarity and list the position with highest percentage.}
 \usage{
-similar.percent(seq, ref)
+similar.percent(seq, target, level = 1, included = NULL, excluded = NULL)
 }
 \arguments{
-\item{seq}{a list of SeqFastadna. To keep it simple, 
-use read.fasta from seqinr to import the fasta file.}
+\item{seq}{is fastaDNA object to analysed.}
 
-\item{ref}{the specific allele to be identified.}
+\item{target}{is the name of the reference allele}
+
+\item{level}{is the number of positions.}
+
+\item{included}{is the included position for analysed, these will force the computation
+to compute the percentage of dissimilarity at the position no matter what}
+
+\item{excluded}{is the positions that are excluded from computation}
 }
 \value{
-Will return the a list of SNPs that can be used
+Will returns simpson's index and the position.
 }
 \description{
-\code{similar.percent} is used to find the calculate the percentage of 
-similarity at alleles.
+\code{similar.percent} is used to calculate the percentage of dissimilarity and list the position with highest percentage.
 }
