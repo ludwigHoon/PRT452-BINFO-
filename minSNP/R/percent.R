@@ -118,9 +118,9 @@ branch.percent<-function(seq, target, level=1, included=NULL, excluded=NULL, num
 	res=similar.percent(seq, target, level, included, excluded)
 	result[[paste('result', num, sep= ' ')]]=res
 	num=num+1
+	excluded=c(excluded, res[[1]]$'position')
 	
 	while(num<=numRes){
-		excluded=c(excluded, res[[1]]$'position')
 		res=similar.percent(seq, target, level, included, excluded)
 		result[[paste('result', num, sep= ' ')]]=res$'result'
 		num=num+1
