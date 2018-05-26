@@ -122,8 +122,9 @@ branch.percent<-function(seq, target, level=1, included=NULL, excluded=NULL, num
 	
 	while(num<=numRes){
 		res=similar.percent(seq, target, level, included, excluded)
-		result[[paste('result', num, sep= ' ')]]=res$'result'
+		result[[paste('result', num, sep= ' ')]]=res
 		num=num+1
+		excluded=c(excluded, res[[1]]$'position')
 	}
     remnant=vector('numeric')
     for (p in 1:length(seq[[1]])){
