@@ -18,7 +18,6 @@ percent.pattern<-function(seq, step, positions){
 }
 
 #' \code{percent.calculate} is used to calculate the percentage of dissimilarity.
-#' @param seq is fastaDNA object to analysed.
 #' @param pattern is the structure generated from \code{percent.pattern}.
 #' @param tNames is the name of the reference allele.
 #' @return Will returns percentage of dissimilarity.
@@ -54,10 +53,9 @@ percent.calculate<-function(pattern, tNames){
 #' @param included is the included position for analysed, these will force the computation
 #' to compute the percentage of dissimilarity at the position no matter what
 #' @param excluded is the positions that are excluded from computation
-#' @param last force the function to return whole current result when it's the last round = to find the residual
 #' @return Will returns percentage of dissimilarity and the position.
 #' @export
-similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, last=FALSE){
+similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
     for (n in targets){
 		if (is.null(seq[[n]])){
 			return(NULL)
@@ -68,15 +66,11 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, l
 	lvl=1
 	type=list()
     remnant=list()
-	appended=list()
 	explored=vector('numeric')
 	if(!is.null(included)){
 		for (inc in included){
-			type=percent.pattern(seq, appended, inc)
+			type=percent.pattern(seq, type, inc)
 			percent=percent.calculate(type, targets)
-			for(al in 1:length(seq)){
-			appended[[getName(seq[[al]])]]=paste(appended[[getName(seq[[al]])]], seq[[al]][inc], sep="")
-			}
 			explored=c(explored, inc)
 			result[[lvl]]=list(position=setdiff(explored, excluded), percent=percent)
 			lvl=lvl+1
@@ -87,35 +81,47 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, l
 	explored=c(explored, excluded)
 	for(position in 1:length(seq[[1]])){
 		if (position %in% explored){next}
-		type=percent.pattern(seq, appended, position)
-		percent=percent.calculate(type, targets)
+		ctype=percent.pattern(seq, type, position)
+		percent=percent.calculate(ctype, targets)
 		curRes[[position]]=list(position=position, value=percent)	
-		}	
-		explored=sort(explored, decreasing=TRUE)
-		for (a in explored){ curRes[[a]]<-NULL}
-		position=list.order(curRes, (value))[1]
-		index=as.numeric(curRes[[position]]['value'])
-		position=curRes[[position]]$position
-        explored=c(explored, position)
+	}	
+	for (a in explored){ curRes[[a]]=list(position=a, value=0)}
+		pos=list.order(curRes, (value))[1]
+		index=as.numeric(curRes[[pos]]['value'])
+		actPos=curRes[[pos]]$position
+        explored=c(explored, actPos)
 		result[[lvl]]=list(position=setdiff(explored, excluded),percent=index)
+		type=percent.pattern(seq, type, actPos)
 		lvl=lvl+1
-		for(al in 1:length(seq)){
-			appended[[getName(seq[[al]])]]=paste(appended[[getName(seq[[al]])]], seq[[al]][position], sep="")
-			}
-	}
-	if(last){
-		sorted=list.order(curRes,(value))
-		residual=vector('numeric')
-		for (p in sorted){
-			if(as.numeric(curRes[[p]]['value'])==100){
-				residual=c(residual, curRes[[p]]$position)
-			}else{
-				break
-			}
-		}
-		return(list(result=result, prepended=setdiff(explored, c(excluded, position)), residual=setdiff(residual, position)))
 	}
 	return(result)
+}
+
+#' \code{percent.residual} is used to find the residual.
+#' @param seq is fastaDNA object to analysed.
+#' @param positions is the positions from the result.
+#' @param targets is the name of the reference allele.
+#' @param excluded is the excluded positions
+#' @return Will returns the residual positions.
+#' @export
+percent.residual<-function(seq, targets, positions=NULL, excluded=NULL){
+ 	for (n in targets){
+		if (is.null(seq[[n]])){
+			return(NULL)
+		} 
+	}
+    
+	result=list()
+	for (a in 1:length(seq[[1]])){
+		type=list()
+		if(a %in% c(positions, excluded)){next}
+		type=percent.pattern(seq, type, c(positions, a))
+		percent=percent.calculate(type, targets)
+		if(percent==100){
+			result=c(result, a)
+		}
+	}
+	return (list(prepended=toString(positions), residual=toString(result)))
 }
 
 #' \code{branch.percent} is used to calculate 1 or more percentage of dissimilarity and list the position with highest percentage.
@@ -135,31 +141,18 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
     if(numRes<=0){numRes=1}
     result=list()
 	num=1
-	res=similar.percent(seq, targets, level, included, excluded, (num==numRes))
-	if(num==numRes){
-			result[[paste('result', num, sep= ' ')]]=res$'result'
-			excluded=c(excluded, res$'result'[[1]]$'position')
-			remnant=res$'residual'
-		}else{
-			result[[paste('result', num, sep= ' ')]]=res
-			excluded=c(excluded, res[[1]]$'position')
-		}
+	res=similar.percent(seq, targets, level, included, excluded)
+	result[[paste('result', num, sep= ' ')]]=res
+	excluded=c(excluded, res[[1]]$'position')
 	num=num+1
+
 	while(num<=numRes){
-		res=similar.percent(seq, targets, level, included, excluded, (num==numRes))
-		if(num==numRes){
-			result[[paste('result', num, sep= ' ')]]=res$'result'
-			excluded=c(excluded, res$'result'[[1]]$'position')
-			remnant=list(prepended=res$'prepended', position=res$'residual')
-			num=num+1
-		}else{
-			result[[paste('result', num, sep= ' ')]]=res
-			excluded=c(excluded, res[[1]]$'position')
-			num=num+1
-		}
+		res=similar.percent(seq, targets, level, included, excluded)
+		result[[paste('result', num, sep= ' ')]]=res
+		excluded=c(excluded, res[[1]]$'position')
+		num=num+1	
 	}
-    RES=list(result=result, remnant=remnant)
-	return(RES)
+	return(result)
 }
 
 #' \code{present.percent} is used to present the result of percent calculation.

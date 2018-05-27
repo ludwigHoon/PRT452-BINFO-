@@ -10,8 +10,6 @@ percent.calculate(pattern, tNames)
 \item{pattern}{is the structure generated from \code{percent.pattern}.}
 
 \item{tNames}{is the name of the reference allele.}
-
-\item{seq}{is fastaDNA object to analysed.}
 }
 \value{
 Will returns percentage of dissimilarity.

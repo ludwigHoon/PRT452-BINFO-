@@ -4,8 +4,7 @@
 \alias{similar.percent}
 \title{\code{similar.percent} is used to calculate the percentage of dissimilarity and list the position with highest percentage.}
 \usage{
-similar.percent(seq, targets, level = 1, included = NULL, excluded = NULL,
-  last = FALSE)
+similar.percent(seq, targets, level = 1, included = NULL, excluded = NULL)
 }
 \arguments{
 \item{seq}{is fastaDNA object to analysed.}
@@ -18,8 +17,6 @@ similar.percent(seq, targets, level = 1, included = NULL, excluded = NULL,
 to compute the percentage of dissimilarity at the position no matter what}
 
 \item{excluded}{is the positions that are excluded from computation}
-
-\item{last}{force the function to return whole current result when it's the last round = to find the residual}
 }
 \value{
 Will returns percentage of dissimilarity and the position.
