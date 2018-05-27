@@ -76,6 +76,7 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 			lvl=lvl+1
 		}
 	}
+	if(level>0){
 	for(a in 1:level){
 	curRes=list()
 	explored=c(explored, excluded)
@@ -93,6 +94,7 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 		result[[lvl]]=list(position=setdiff(explored, excluded),percent=index)
 		type=percent.pattern(seq, type, actPos)
 		lvl=lvl+1
+	}
 	}
 	return(result)
 }
