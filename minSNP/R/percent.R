@@ -108,7 +108,7 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, l
 		residual=vector('numeric')
 		for (p in sorted){
 			if(as.numeric(curRes[[p]]['value'])==100){
-				residual=c(residual, p)
+				residual=c(residual, curRes[[p]]$position)
 			}else{
 				break
 			}
