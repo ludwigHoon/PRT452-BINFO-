@@ -79,6 +79,7 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 	if(level>0){
 	for(a in 1:level){
 	curRes=list()
+	
 	explored=c(explored, excluded)
 	for(position in 1:length(seq[[1]])){
 		if (position %in% explored){next}
@@ -103,27 +104,34 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 #' @param seq is fastaDNA object to analysed.
 #' @param positions is the positions from the result.
 #' @param targets is the name of the reference allele.
-#' @param excluded is the excluded positions
-#' @return Will returns the residual positions.
+#' @return Will returns the residual alleles.
 #' @export
-percent.residual<-function(seq, targets, positions=NULL, excluded=NULL){
- 	for (n in targets){
-		if (is.null(seq[[n]])){
-			return(NULL)
-		} 
+percent.residual<-function(seq, targets, positions=NULL){
+	if (is.null(seq[[targets]])){
+		return(NULL)
+	} 
+
+	if (is.null(positions)){
+		return(NULL)
 	}
-    
+	
 	result=list()
-	for (a in 1:length(seq[[1]])){
-		type=list()
-		if(a %in% c(positions, excluded)){next}
-		type=percent.pattern(seq, type, c(positions, a))
-		percent=percent.calculate(type, targets)
-		if(percent==100){
-			result=c(result, a)
+	type=percent.pattern(seq, list(), positions)
+
+	for (t in names(type)){
+		if (t==targets){
+			next
+		}
+		if (type[t] == type[[targets]]){
+			result=c(result, t)
 		}
 	}
-	return (list(prepended=toString(positions), residual=toString(result)))
+	if(length(result)>0){
+		return (result)
+	}else{
+		return(NULL)
+	}
+	
 }
 
 #' \code{branch.percent} is used to calculate 1 or more percentage of dissimilarity and list the position with highest percentage.
@@ -157,13 +165,15 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
 	return(result)
 }
 
+#NONFUNCTIONAL YET
 #' \code{present.percent} is used to present the result of percent calculation.
 #' @param result the result from \code{branch.percent}
 #' @return Will print out the result
 #' @export
-present.percent<-function(result){
+present.percent<-function(seq, target, result, level){
     print("Result:")
     print(result$'result')
-    print("Residual")
-    print(result$'remnant')
+    print("Residual:")
+	res=percent.residual(seq, target, result$'result'[[level]]$position)
+	print(res)
 }
