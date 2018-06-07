@@ -4,7 +4,7 @@
 \alias{percent.residual}
 \title{\code{percent.residual} is used to find the residual.}
 \usage{
-percent.residual(seq, targets, positions = NULL, excluded = NULL)
+percent.residual(seq, targets, positions = NULL)
 }
 \arguments{
 \item{seq}{is fastaDNA object to analysed.}
@@ -12,11 +12,9 @@ percent.residual(seq, targets, positions = NULL, excluded = NULL)
 \item{targets}{is the name of the reference allele.}
 
 \item{positions}{is the positions from the result.}
-
-\item{excluded}{is the excluded positions}
 }
 \value{
-Will returns the residual positions.
+Will returns the residual alleles.
 }
 \description{
 \code{percent.residual} is used to find the residual.

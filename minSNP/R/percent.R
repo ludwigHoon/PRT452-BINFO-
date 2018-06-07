@@ -127,7 +127,7 @@ percent.residual<-function(seq, targets, positions=NULL){
 		}
 	}
 	if(length(result)>0){
-		return (result)
+		return (toString(result))
 	}else{
 		return(NULL)
 	}

@@ -4,7 +4,7 @@
 \alias{present.percent}
 \title{\code{present.percent} is used to present the result of percent calculation.}
 \usage{
-present.percent(result)
+present.percent(seq, target, result, level)
 }
 \arguments{
 \item{result}{the result from \code{branch.percent}}
