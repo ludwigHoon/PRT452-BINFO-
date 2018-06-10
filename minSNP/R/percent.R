@@ -165,15 +165,21 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
 	return(result)
 }
 
-#NONFUNCTIONAL YET
 #' \code{present.percent} is used to present the result of percent calculation.
 #' @param result the result from \code{branch.percent}
 #' @return Will print out the result
 #' @export
-present.percent<-function(seq, target, result, level){
-    print("Result:")
-    print(result$'result')
-    print("Residual:")
-	res=percent.residual(seq, target, result$'result'[[level]]$position)
-	print(res)
+present.percent<-function(seq, target, result){
+	numRes=length(result)
+	if(numRes>=1){
+		level=length(result[[1]])
+	}
+	for (a in 1: numRes){
+		print(paste("Result ", a, ":", sep=''))
+   		print(result[[a]])
+		print("Residual:")
+		res=percent.residual(seq, target, result[[a]][[level]]$position)
+		print(res)
+		cat('----------\n\n')
+	}
 }
