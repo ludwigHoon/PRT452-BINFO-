@@ -26,6 +26,7 @@ percent.calculate<-function(pattern, tNames){
     for (n in tNames){
 		if (is.null(pattern[[n]])){
 			print("Target not found")
+			return(-1)
 		} 
 	}
         targetSeqs=vector('character')
