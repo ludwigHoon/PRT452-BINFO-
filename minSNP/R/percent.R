@@ -45,6 +45,28 @@ percent.calculate<-function(pattern, tNames){
     
 }
 
+distinct<-function(seq, tNames, exc=NULL){
+	for (name in tNames){
+		if(! name %in% names(seq)){
+			print('Sequence not found')
+			return(NULL)
+		}
+	}
+	newExc = list()
+	i<-1
+	for (tName in tNames){
+		for (p in 1:length(seq[[tName]])){
+			if(p %in% exc){next}
+			if (percent.calculate(percent.pattern(seq, list(), p) , tName) ==100){
+				newExc[[i]]<-p
+				i<-i+1
+			}
+		}
+	}
+	newExc = c(newExc, exc)
+	return(newExc)
+}
+
 #' \code{similar.percent} is used to calculate the percentage of dissimilarity and list the position with highest percentage.
 #' @import seqinr
 #' @import rlist
@@ -168,6 +190,8 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
 
 #' \code{present.percent} is used to present the result of percent calculation.
 #' @param result the result from \code{branch.percent}
+#' @param target is the name of the allele targeted
+#' @param seq is fastaDNA object to analysed.
 #' @return Will print out the result
 #' @export
 present.percent<-function(seq, target, result){
@@ -183,4 +207,26 @@ present.percent<-function(seq, target, result){
 		print(res)
 		cat('----------\n\n')
 	}
+}
+#' \code{result.csv} is used to output the result to csv file. 
+#' @param result is from \code{branch.percent} 
+#' @param target is the name of the allele targeted
+#' @param filename is the name of the output csv file, default to datetime of when the file is generated
+#' @return will generate a csv file with the filename in the current directory
+#' @export 
+result.csv<-function(result, target, filename=NULL){
+	#file name is generated automatically from the current system date 
+	if (filename ==NULL){filename=format(Sys.time(), "%Y-%m-%d_%H:%M");}
+	filename=paste(filename,".csv", sep = "")
+
+	#Convert the result into suitable format for export to csv
+	for (a in names(result)){
+
+	}
+
+	#Write to CSV file
+
+	#Adding the details & metadata of the analysis
+	cat("\n", "Details", target, sep = "\n", append = TRUE, file = filename)
+
 }
