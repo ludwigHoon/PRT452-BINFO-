@@ -2,8 +2,11 @@
 
 export(branch.percent)
 export(branch.simpson)
+export(distinct)
 export(flagAllele)
 export(flagPosition)
+export(output.percent)
+export(output.simpson)
 export(percent.calculate)
 export(percent.pattern)
 export(percent.residual)

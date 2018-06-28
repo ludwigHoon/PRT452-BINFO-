@@ -7,6 +7,10 @@
 present.percent(seq, target, result)
 }
 \arguments{
+\item{seq}{is fastaDNA object to analysed.}
+
+\item{target}{is the name of the allele targeted}
+
 \item{result}{the result from \code{branch.percent}}
 }
 \value{

@@ -153,3 +153,34 @@ present.simpson <-function(seq, result){
 	}
 	return(output)
 }		
+
+#' \code{output.simpson} is used to output the result to csv file. 
+#' @param result is from \code{branch.simpson} 
+#' @param seq is fastaDNA object to analysed.
+#' @param filename is the name of the output csv file, default to datetime of when the file is generated
+#' @return will generate a csv file with the filename in the current directory
+#' @export 
+output.simpson<-function(result, seq, filename=NULL){
+	#file name is generated automatically from the current system date 
+	if (is.null(filename)){filename=format(Sys.time(), "%Y-%m-%d_%H:%M");}
+	filename=paste(filename,".csv", sep = "")
+
+	numRes=length(result)
+	level=length(result[[1]])
+
+	output = ""
+	for (num in 1:numRes){
+		output=paste(output, 'result ', num, '\n', sep='')
+		output=paste(output, 'SNP,position,D\n', sep='')
+		for (lvl in 1:level){
+			outlevel=''
+			outlevel=paste(outlevel, lvl, ',', 
+					result[[num]][[lvl]]$'position', ',', 
+					round(result[[num]][[lvl]]$'index', 4), '\n',
+					sep='' )
+			output=paste(output, outlevel)
+		}
+		output=paste(output, '\n', sep='')
+	}
+	write(output, file=filename)
+}

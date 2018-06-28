@@ -45,6 +45,12 @@ percent.calculate<-function(pattern, tNames){
     
 }
 
+#' \code{distinct} is used to calculate the percentage of dissimilarity.
+#' @param seq the pattern generated from \code{percent.pattern}
+#' @param tNames is the name of the group of interested alleles.
+#' @param exc is the original excluded positions, additional positions will be added to it.
+#' @return Will returns percentage of dissimilarity.
+#' @export
 distinct<-function(seq, tNames, exc=NULL){
 	for (name in tNames){
 		if(! name %in% names(seq)){
@@ -217,25 +223,43 @@ present.percent<-function(seq, target, result){
 		cat('----------\n\n')
 	}
 }
-#' \code{result.csv} is used to output the result to csv file. 
+
+#' \code{output.percent} is used to output the result to csv file. 
 #' @param result is from \code{branch.percent} 
+#' @param seq is fastaDNA object to analysed.
 #' @param target is the name of the allele targeted
 #' @param filename is the name of the output csv file, default to datetime of when the file is generated
 #' @return will generate a csv file with the filename in the current directory
 #' @export 
-result.csv<-function(result, target, filename=NULL){
+output.percent<-function(result, target, seq, filename=NULL){
 	#file name is generated automatically from the current system date 
-	if (filename ==NULL){filename=format(Sys.time(), "%Y-%m-%d_%H:%M");}
+	if (is.null(filename)){filename=format(Sys.time(), "%Y-%m-%d_%H:%M");}
 	filename=paste(filename,".csv", sep = "")
 
-	#Convert the result into suitable format for export to csv
-	for (a in names(result)){
+	numRes=length(result)
+	level=length(result[[1]])
 
+	output=paste('Target: ', target, '\n', sep='')
+	#Convert the result into suitable format for export to csv
+	for (num in 1:numRes){
+		output=paste(output, 'result ', num, '\n', sep='')
+		output=paste(output, 'SNP,position,%,residual\n', sep='')
+		for (lvl in 1:level){
+			outlevel=''
+			res=''
+			if(lvl==level){
+				res=percent.residual(seq, target, result[[num]][[lvl]]$position)
+				res=gsub(', ', ' ', res)
+			}
+			outlevel=paste(outlevel, lvl, ',', 
+					result[[num]][[lvl]]$'position'[lvl], ',', 
+					round(result[[num]][[lvl]]$'percent', 4), ',',
+					toString(res), '\n',
+					sep='' )
+			output=paste(output, outlevel)
+		}
+		output=paste(output, '\n', sep='')
 	}
 
-	#Write to CSV file
-
-	#Adding the details & metadata of the analysis
-	cat("\n", "Details", target, sep = "\n", append = TRUE, file = filename)
-
+	write(output, file=filename)
 }
