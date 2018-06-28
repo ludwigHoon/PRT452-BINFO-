@@ -6,11 +6,11 @@
 #' @return Will return the pattern for analysis later
 #' @export
 percent.pattern<-function(seq, step, positions){
-    for (a in seq){
-        b=getName(a)
+    for (a in names(seq)){
+        b=a
         newSeq=""
         for (p in positions){
-            newSeq=paste(newSeq, a[p], sep='')
+            newSeq=paste(newSeq, seq[[a]][p], sep='')
         }
         step[[b]]=paste(step[[b]], newSeq, sep='')
     }
@@ -52,17 +52,26 @@ distinct<-function(seq, tNames, exc=NULL){
 			return(NULL)
 		}
 	}
+	if( length(unique(tNames))<=1){
+		print('Invalid argument')
+		return(NULL)
+	}
+	cseq = seq
+	for (name in names(seq)){
+		if(! name %in% tNames){
+			cseq[[name]]=NULL
+		}
+	}
 	newExc = list()
 	i<-1
-	for (tName in tNames){
-		for (p in 1:length(seq[[tName]])){
+	tName = sample(tNames,1)
+		for (p in 1:length(cseq[[tName]])){
 			if(p %in% exc){next}
-			if (percent.calculate(percent.pattern(seq, list(), p) , tName) ==100){
+			if (percent.calculate(percent.pattern(cseq, list(), p) , tName) > 0 ){
 				newExc[[i]]<-p
 				i<-i+1
 			}
 		}
-	}
 	newExc = c(newExc, exc)
 	return(newExc)
 }
