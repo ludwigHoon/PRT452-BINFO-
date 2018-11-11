@@ -4,7 +4,9 @@ Version: 1.2.0
 Authors@R: person("Ludwig KianSoon", "Hoon", email = "ldwgkshoon@gmail.com", role = c("aut", "cre"))
 Description: This is a R implementation of minimum SNPs software as described in Price E.P., Inman-Bamber, J., Thiruvenkataswamy, V., Huygens, F and Giffard, P.M. 2007, Computer-aided identification of polymorphism sets diagnostic for groups of bacterial and viral genetic variants. BMC Bioinformatics 8:278.
 Depends: R (>= 3.4.1)
-Imports: rlist, seqinr
+Imports: 
+    rlist,
+    seqinr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
