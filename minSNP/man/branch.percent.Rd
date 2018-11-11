@@ -4,8 +4,8 @@
 \alias{branch.percent}
 \title{\code{branch.percent} is used to calculate 1 or more percentage of dissimilarity and list the position with highest percentage.}
 \usage{
-branch.percent(seq, targets, level = 1, included = NULL, excluded = NULL,
-  numRes = 1)
+branch.percent(seq, targets, level = 1, included = NULL,
+  excluded = NULL, numRes = 1)
 }
 \arguments{
 \item{seq}{is fastaDNA object to analysed.}

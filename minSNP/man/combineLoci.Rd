@@ -14,7 +14,7 @@ combineLoci(st_profile, alleles, included = NULL, excluded = NULL)
 \item{included}{is the ST to be included for analysis}
 
 \item{excluded}{is the ST to be excluded from analysis
-Note that included is used before excluded, a range can be used, e.g. to included ST 1 to 100, 
+Note that included is used before excluded, a range can be used, e.g. to included ST 1 to 100,
 included=c(1:100), can be similarly applied to excluded}
 }
 \value{

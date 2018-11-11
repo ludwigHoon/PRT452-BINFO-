@@ -2,7 +2,7 @@
 % Please edit documentation in R/hrm.R
 \name{all2curv}
 \alias{all2curv}
-\title{\code{all2curv} is a helper function that takes in a data frame consisting of ST profile and its fragment ID 
+\title{\code{all2curv} is a helper function that takes in a data frame consisting of ST profile and its fragment ID
 and combine them with the fragment sequences and fragment curve number}
 \usage{
 all2curv(st_loci, alleles)
@@ -16,6 +16,6 @@ all2curv(st_loci, alleles)
 data frame with ST, fragments sequences, fragments curve numbers
 }
 \description{
-\code{all2curv} is a helper function that takes in a data frame consisting of ST profile and its fragment ID 
+\code{all2curv} is a helper function that takes in a data frame consisting of ST profile and its fragment ID
 and combine them with the fragment sequences and fragment curve number
 }

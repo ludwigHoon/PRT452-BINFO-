@@ -3,8 +3,8 @@
 \name{changeCurve}
 \alias{changeCurve}
 \title{\code{changeCurve} is used to modify the curve number if the conditions are met. To specify conditions, create a csv file with the following headings:
-fragment_name, type, replace_with, if_match_fragment, if_match_curve, 
-where type is 
+fragment_name, type, replace_with, if_match_fragment, if_match_curve,
+where type is
 1. replace if match fragment
 2. replace if match curve number
 for non-relevant field, use _}
@@ -21,8 +21,8 @@ the dataframe with curve number modified. All rows with NAs are also dropped. Al
 }
 \description{
 \code{changeCurve} is used to modify the curve number if the conditions are met. To specify conditions, create a csv file with the following headings:
-fragment_name, type, replace_with, if_match_fragment, if_match_curve, 
-where type is 
+fragment_name, type, replace_with, if_match_fragment, if_match_curve,
+where type is
 1. replace if match fragment
 2. replace if match curve number
 for non-relevant field, use _
