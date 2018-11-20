@@ -4,12 +4,15 @@
 \alias{combineLoci}
 \title{\code{combineLoci} is used to organise the fragment to its respective ST}
 \usage{
-combineLoci(st_profile, alleles, included = NULL, excluded = NULL)
+combineLoci(st_profile, alleles, changeSet = NULL, included = NULL,
+  excluded = NULL)
 }
 \arguments{
 \item{st_profile}{is the location of the ST_profiles.csv that can be obtained in mlst database}
 
 \item{alleles}{is the data frame generated from alleles}
+
+\item{changeSet}{is the location of the csv created, see \code{changeCurve} for the format of the csv file}
 
 \item{included}{is the ST to be included for analysis}
 

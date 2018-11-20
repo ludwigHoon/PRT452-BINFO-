@@ -31,17 +31,18 @@ invalidSeq<-function(proSeq, acceptedChar = c("A", "a", "C", "c", "T", "t", "G",
 #' \code{alleles} is used to get the sequences fragments of the alleles to be analysed
 #' @param loci_info is the csv file with the following header filename,allele_length,fragment_name,fragment_start,fragment_stop
 #' and each rows contain relevant information with ',' seperating the field
+#' @param acceptedChar is the characters which are considered valid
 #' @return Will returns dataframe of different fragment with matching length, their GC content (curve number) and their fragment sequences
 #' @import seqinr
 #' @export
-alleles <- function(loci_info) {
+alleles <- function(loci_info, acceptedChar = c("A", "a", "C", "c", "T", "t", "G", "g", "-")) {
     info <- read.csv(loci_info, header = TRUE, sep = ",")
     filenames <- c(as.character(info$filename))
     fragment_names <- c(as.character(info$fragment_name))
 
     ## Initialise a list to hold the dataframes of the alleles and corresponding curve numbers
     df_list <- list()
-    print('Processing region:')
+    print('Processing loci:')
     for(i in 1:length(filenames)) {
 	    x <- read.fasta(filenames[i])
 
@@ -54,33 +55,33 @@ alleles <- function(loci_info) {
             next
         }
         
-
-        
-
         ## Check for nonstandard character
         pp <- sapply(getFrag(correct_length, info[i,4], info[i,5]), invalidSeq)
         noInvalid <- correct_length[pp == FALSE]
+        invalid <- correct_length[pp == TRUE]
         fragment <- getSequence(getFrag(noInvalid, info[i,4], info[i,5]), as.string=TRUE)
         fragment_STR <- sapply(fragment, `[[`, 1)
-        gc_content <- sapply(getFrag(noInvalid, info[i,4], info[i,5]), GC) # returns between 0 and 1
+        gc_content <- sapply(getFrag(noInvalid, info[i,4], info[i,5]), calGC) # returns between 0 and 1
 
 
         ## Populate a dataframe with the locus name, allele number and curve number
         gene <- strsplit(as.character(getName(noInvalid)), '_')
-        gene_name <- sapply(gene, `[[`,1)
-	    gene_number <- sapply(gene, `[[`,2)
+        locus_name <- sapply(gene, `[[`,1)
+	    allele_number <- sapply(gene, `[[`,2)
 
         curve <- gc_content 
         fragment_name <- fragment_names[i]
-	    df_list[[i]] = data.frame(gene_name, gene_number, fragment_name, curve, fragment_STR)
+	    df_list[[i]] = data.frame(locus_name, allele_number, fragment_name, curve, fragment_STR)
         
         print(i)
-        if (length(correct_length[pp==TRUE]) > 0){
-            print("Ignored (containing invalid characters) :")
-            print(getName(correct_length[pp==TRUE]))
+        ignoredL = length(invalid) + length(wrong_length)
+        print(paste("------Number of ignored alleles: ", ignoredL, "------"))
+        if (length(invalid) > 0){
+            print(paste("Ignored (containing invalid characters) : ", length(invalid)))
+            print(getName(invalid))
         }
         if (length(wrong_length) > 0){
-            print("Ignored (wrong length) :")
+            print(paste("Ignored (wrong length) :", length(wrong_length)))
             print(getName(wrong_length))
         }
         }
@@ -112,26 +113,35 @@ all2curv <- function(st_loci, alleles){
 #' \code{combineLoci} is used to organise the fragment to its respective ST
 #' @param st_profile is the location of the ST_profiles.csv that can be obtained in mlst database
 #' @param alleles is the data frame generated from alleles
+#' @param changeSet is the location of the csv created, see \code{changeCurve} for the format of the csv file
 #' @param included is the ST to be included for analysis
 #' @param excluded is the ST to be excluded from analysis
 #' Note that included is used before excluded, a range can be used, e.g. to included ST 1 to 100,
 #' included=c(1:100), can be similarly applied to excluded
 #' @return data frame with ST, fragments sequences, fragments curve numbers
 #' @export
-combineLoci <- function(st_profile, alleles, included=NULL, excluded=NULL){
-    ## Load a ','-delimited .csv file of the ST profiles and save as a dataframe
-    ST_profiles <- read.table(st_profile, header = TRUE, sep = ",")
+combineLoci <- function(st_profile, alleles, changeSet=NULL, included=NULL, excluded=NULL){
+    ## Load a tab-delimited .csv file of the ST profiles and save as a dataframe
+    ST_profiles <- read.table(st_profile, header = TRUE, sep = "\t")
     ## Create a duplicate of 'ST_profile' for content editing
     ST_curves <- ST_profiles
-    name=lapply(alleles, function(x){levels(x[1]$gene_name[1])})
+    # Drop any columns that is not in the profile.
+    name=lapply(alleles, function(x){levels(x[1]$locus_name[1])})
     frag_name=unlist(lapply(alleles, function(x){levels(x[3]$fragment_name)}))
     allele_name = c("ST", unlist(name))
     ST_curves <- subset(ST_curves, select=allele_name)
     col_frag_name=c('ST')
 
-    for(i in 2:length(colnames(ST_curves))){ #The order of allele ST_profile and loci_info do not have to be the same
+    #Start log file for analysis
+    line = paste("Analysis started at: ", Sys.time())
+    write(line,file="log.txt",append=TRUE)
+
+
+    for(i in 2:length(colnames(ST_curves))){ 
+        #The order of allele ST_profile and loci_info do not have to be the same
         for(j in frag_name){
-            cname = strsplit(colnames(ST_curves)[i], '\\.')[[1]][1] #Support for multiple original similar colnames separated by .
+            #Support for multiple original similar colnames separated by .
+            cname = strsplit(colnames(ST_curves)[i], '\\.')[[1]][1] 
             if(grepl(cname, j)){
                 col_frag_name = c(col_frag_name, j)
                 frag_name=setdiff(frag_name, j)
@@ -149,6 +159,10 @@ combineLoci <- function(st_profile, alleles, included=NULL, excluded=NULL){
     if (!is.null(excluded)){
         new_ST_curves <- new_ST_curves[!new_ST_curves$'ST' %in% excluded,]
     }
+    droppedST <- setdiff(ST_profiles$ST, new_ST_curves$ST)
+    line = paste("ST dropped from analysis are: ", paste(droppedST, collapse=","))
+    write(line,file="log.txt",append=TRUE)
+    new_ST_curves <- changeCurve(changeSet, new_ST_curves)
     return(new_ST_curves)
 }
 
@@ -162,26 +176,34 @@ combineLoci <- function(st_profile, alleles, included=NULL, excluded=NULL){
 #' @param c_st_all is the dataframe generated using \code{combineLoci}
 #' @return the dataframe with curve number modified. All rows with NAs are also dropped. All columns with fragment sequence also dropped.
 #' @export
-changeCurve <- function(changeSet, c_st_all){
-    changeSet<-read.csv(changeSet, header = TRUE, colClasses = "character", sep = ",")
-    for (change in 1:length(changeSet)){
-        replaceAt <- changeSet[change, 'fragment_name']
-        replaceVal <- changeSet[change, 'replace_with']
-        # type 1 change - match fragment
-        if(changeSet[change,]$type==1){
-            mat_frag <- paste(changeSet[change, 'fragment_name'], '_seq', sep='')
-            condition <- tolower(changeSet[change, 'if_match_fragment'])
-            for (i in 1: nrow(c_st_all)){
-                if ((!is.na(c_st_all[i, mat_frag]))&&(c_st_all[i, mat_frag]==condition)){
-                    c_st_all[i, replaceAt] <- replaceVal
+changeCurve <- function(changeSet=NULL, c_st_all){
+    if (!is.null(changeSet)){
+        changeSet<-read.csv(changeSet, header = TRUE, colClasses = "character", sep = ",")
+        for (change in 1:length(changeSet)){
+            replaceAt <- changeSet[change, 'fragment_name']
+            replaceVal <- changeSet[change, 'replace_with']
+            # type 1 change - match fragment
+            if(changeSet[change,]$type==1){
+                mat_frag <- paste(changeSet[change, 'fragment_name'], '_seq', sep='')
+                condition <- tolower(changeSet[change, 'if_match_fragment'])
+                for (i in 1: nrow(c_st_all)){
+                    if ((!is.na(c_st_all[i, mat_frag]))&&(c_st_all[i, mat_frag]==condition)){
+                        line = paste("Changed curve value of ", c_st_all[i, 'ST'], "from ", 
+                                c_st_all[i, replaceAt], " to ", replaceVal, " due to rule : ", change)
+                        c_st_all[i, replaceAt] <- replaceVal
+                        write(line,file="log.txt",append=TRUE)
+                    }
                 }
-            }
-        }#type 2 change - match curve number
-        else if(changeSet[change,]$type==2){
-            condition <- changeSet[change, 'if_match_curve']
-            for (i in 1: nrow(c_st_all)){
-                if ((!is.na(c_st_all[i, replaceAt]))&&(c_st_all[i, replaceAt]==condition)){
-                    c_st_all[i, replaceAt] <- replaceVal
+            }#type 2 change - match curve number
+            else if(changeSet[change,]$type==2){
+                condition <- changeSet[change, 'if_match_curve']
+                for (i in 1: nrow(c_st_all)){
+                    if ((!is.na(c_st_all[i, replaceAt]))&&(c_st_all[i, replaceAt]==condition)){
+                        line = paste("Changed curve value of ", c_st_all[i, 'ST'], "from ", 
+                                c_st_all[i, replaceAt], " to ", replaceVal, " due to rule : ", change)
+                        c_st_all[i, replaceAt] <- replaceVal
+                        write(line,file="log.txt",append=TRUE)
+                    }
                 }
             }
         }
@@ -244,3 +266,33 @@ hrm.dIndex <- function(result){
     total = length(result$'MElT-ID')
     return(simpson.calculate(pat, total))
 }
+
+#' \code{setID} reads from csv file and out
+#' @param result is the result from \code{generateID}
+#' @param newLocation is the location of the csv file
+#' @return will return the new dataframe with MElT-ID appended
+#' @export
+setID <- function (newLocation, result = NULL ) {
+    n <- read.csv(newLocation, header = TRUE, sep = ",", check.names = FALSE)
+    a <- colnames(result)[colnames(result) != c("ST", "MElT-ID")]
+    b <- colnames(n)[colnames(n) != c("IsolateName")]
+    if (length(setdiff(union(a, b), intersect(a, b))) > 0) {
+        print("Problem with new data OR not result data: Check column names")
+        return(n)
+    }
+    result$ST <- NULL
+    result <- unique(result)
+    newResult <- merge(x = result, y = n, by = b, all.y = TRUE)
+    newResult<-newResult[c(ncol(newResult), 1:ncol(newResult)-1)]
+    return(newResult)
+}
+
+
+#
+#
+#The ideal situation for us would for all the information about the alleles and STs that have been removed,
+# as well as information on the manual changes that are made in the changeCurve function, output to a file.
+
+# Would it be possible to also output the STs which have been ignored in the generation of the MelT-IDs please?
+
+#That way we have a record we can save that documents exactly what happened for the run.

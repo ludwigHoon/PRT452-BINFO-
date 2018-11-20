@@ -9,7 +9,7 @@ where type is
 2. replace if match curve number
 for non-relevant field, use _}
 \usage{
-changeCurve(changeSet, c_st_all)
+changeCurve(changeSet = NULL, c_st_all)
 }
 \arguments{
 \item{changeSet}{is the location of the csv created}
