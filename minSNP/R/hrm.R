@@ -44,7 +44,7 @@ alleles <- function(loci_info, acceptedChar = c("A", "a", "C", "c", "T", "t", "G
     df_list <- list()
     print('Processing loci:')
     for(i in 1:length(filenames)) {
-	    x <- read.fasta(filenames[i])
+	    x <- readFasta(filenames[i])
 
         ## Check the length of the allele and split up the data in to subsets
 	    y <- (getLength(x) == info[i,2])
