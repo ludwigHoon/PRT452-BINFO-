@@ -69,15 +69,18 @@ flagPosition<-function(proSeq, dashIgnore=TRUE){
 	ignoredPos=vector('numeric')
 	if (dashIgnore==FALSE) acceptedChar=c(acceptedChar, "-")
 	
-	for (i in 1:length(proSeq[[1]])){
-		for (i2 in 1:length(proSeq)){
-			if( !is.element(proSeq[[i2]][i],acceptedChar) ){
-				ignoredPos=c(ignoredPos,i)
-				break
-			}
-
-		}
+    k=list()
+	for (i in 1:length(proSeq)){
+        k[[i]]=lapply(proSeq[[i]], function(x) {x %in% acceptedChar} )
 	}
+    for (i in 1:length(proSeq)){
+        k[[i]]=which(k[[i]] == FALSE)
+    }
+    
+    for (i in 1:length(proSeq)){
+        ignoredPos=c(ignoredPos, k[[i]])
+    }
+    
 	print(paste('Ignored Positions:', toString(ignoredPos)))
 	return(ignoredPos)
 }

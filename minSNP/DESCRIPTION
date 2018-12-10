@@ -1,9 +1,9 @@
 Package: minSNP
 Title: Calculate minimum SNPs
-Version: 1.2.4
+Version: 1.2.5
 Authors@R: person("Ludwig KianSoon", "Hoon", email = "ldwgkshoon@gmail.com", role = c("aut", "cre"))
 Description: This is a R implementation of minimum SNPs software as described in Price E.P., Inman-Bamber, J., Thiruvenkataswamy, V., Huygens, F and Giffard, P.M. 2007, Computer-aided identification of polymorphism sets diagnostic for groups of bacterial and viral genetic variants. BMC Bioinformatics 8:278.
-Depends: R (>= 3.4.1)
+Depends: R (>= 3.4.1), foreach
 Imports: 
     rlist,
     seqinr
@@ -13,5 +13,6 @@ LazyData: true
 RoxygenNote: 6.1.1
 Suggests: RUnit,
     knitr,
-    rmarkdown
+    rmarkdown, 
+    doParallel
 VignetteBuilder: knitr

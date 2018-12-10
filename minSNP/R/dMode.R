@@ -41,6 +41,7 @@ simpson.pattern<-function(seq, position, appended=NULL)
 #' \code{similar.simpson} is used to calculate the simpson index and list the position with highest index.
 #' @import seqinr
 #' @import rlist
+#' @import foreach
 #' @param seq is fastaDNA object to analysed.
 #' @param level is the number of positions.
 #' @param included is the included position for analysed, these will force the computation
@@ -70,14 +71,15 @@ similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
 	for(a in 1:level){
 	curRes=list()
 	explored=c(explored, excluded)
-	for(position in 1:length(seq[[1]])){
-		if (position %in% explored){next}
+	positions=1:length(seq[[1]])
+	positions=positions[!positions %in% explored]
+	curRes <- foreach(position= positions) %dopar% {
+		if (position %in% explored){list(position=position, value=-1)}else{
 		type=simpson.pattern(seq, position, appended)
 		simpIndex=simpson.calculate(type, N)
-		curRes[[position]]=list(position=position, value=simpIndex)	
-		}	
-		explored=sort(explored, decreasing=TRUE)
-		for (a in explored){ curRes[[a]]<-NULL}
+		list(position=position, value=simpIndex)
+		}
+		}
 		position=list.order(curRes, (value))[1]
 		index=as.numeric(curRes[[position]]['value'])
 		position=curRes[[position]]$position
@@ -88,8 +90,8 @@ similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
 			}
 		explored=c(explored, position)
 	}
+
 	return(result)
-	
 }
 
 #' \code{branch.simpson} is used to calculate 1 or more simpson index and list the position with highest index.
