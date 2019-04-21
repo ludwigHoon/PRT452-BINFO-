@@ -119,11 +119,11 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 	curRes=list()
 	
 	explored=c(explored, excluded)
-	for(position in 1:length(seq[[1]])){
+	curRes <- foreach(position = 1:length(seq[[1]]), .packages = 'minSNP') %dopar% {
 		if (position %in% explored){next}
 		ctype=percent.pattern(seq, type, position)
 		percent=percent.calculate(ctype, targets)
-		curRes[[position]]=list(position=position, value=percent)	
+		list(position=position, value=percent)	
 	}	
 	for (a in explored){ curRes[[a]]=list(position=a, value=0)}
 		pos=list.order(curRes, (value))[1]
@@ -142,7 +142,7 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 #' @param seq is fastaDNA object to analysed.
 #' @param positions is the positions from the result.
 #' @param targets is the name of the reference allele.
-#' @return Will returns the residual alleles.
+#' @return Will returns theD residual alleles.
 #' @export
 percent.residual<-function(seq, targets, positions=NULL){
 	if (is.null(seq[[targets]])){

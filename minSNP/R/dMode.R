@@ -73,7 +73,7 @@ similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
 	explored=c(explored, excluded)
 	positions=1:length(seq[[1]])
 	positions=positions[!positions %in% explored]
-	curRes <- foreach(position= positions) %dopar% {
+	curRes <- foreach(position= positions, .packages = 'minSNP') %dopar% {
 		if (position %in% explored){list(position=position, value=-1)}else{
 		type=simpson.pattern(seq, position, appended)
 		simpIndex=simpson.calculate(type, N)
