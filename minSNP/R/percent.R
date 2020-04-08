@@ -120,11 +120,16 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 	
 	explored=c(explored, excluded)
 	curRes <- foreach(position = 1:length(seq[[1]]), .packages = 'minSNP') %dopar% {
-		if (position %in% explored){next}
+		if (position %in% explored){
+			#print(paste("skip:", position))
+			return(list(position=position, value=0))}
 		ctype=percent.pattern(seq, type, position)
+		#print(paste("ctype: ", ctype))
 		percent=percent.calculate(ctype, targets)
-		list(position=position, value=percent)	
-	}	
+		#print(paste("Percent: ", percent))
+		return(list(position=position, value=percent)	)
+	}
+	#print(paste("CURRES: ", curRes))
 	for (a in explored){ curRes[[a]]=list(position=a, value=0)}
 		pos=list.order(curRes, (value))[1]
 		index=as.numeric(curRes[[pos]]['value'])
@@ -193,12 +198,13 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
 	result[[paste('result', num, sep= ' ')]]=res
 	excluded=c(excluded, res[[1]]$'position')
 	num=num+1
-
+	### TO CHECK***
 	while(num<=numRes){
 		res=similar.percent(seq, targets, level, included, excluded)
+		if(is.null(res)){break}
 		result[[paste('result', num, sep= ' ')]]=res
 		excluded=c(excluded, res[[1]]$'position')
-		num=num+1	
+		num=num+1
 	}
 	return(result)
 }
@@ -216,11 +222,16 @@ present.percent<-function(seq, target, result){
 	}
 	for (a in 1: numRes){
 		print(paste("Result ", a, ":", sep=''))
-   		print(result[[a]])
-		print("Residual:")
-		res=percent.residual(seq, target, result[[a]][[level]]$position)
-		print(res)
-		cat('----------\n\n')
+		if (length(result[[a]][[level]]$position)==0){
+			print("---No result---")
+			break;
+		}else{
+			print(result[[a]])
+			print("Residual:")
+			res=percent.residual(seq, target, result[[a]][[level]]$position)
+			print(res)
+			cat('----------\n\n')
+		}
 	}
 }
 

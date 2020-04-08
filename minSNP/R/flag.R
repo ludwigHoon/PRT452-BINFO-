@@ -81,8 +81,9 @@ flagPosition<-function(proSeq, dashIgnore=TRUE){
         ignoredPos=c(ignoredPos, k[[i]])
     }
     
-	print(paste('Ignored Positions:', toString(ignoredPos)))
-	return(ignoredPos)
+	#print(paste('Ignored Positions:', toString(ignoredPos)))
+    result <- unique(ignoredPos)
+	return(result)
 }
 
 #' \code{readFasta} is used to read fasta file

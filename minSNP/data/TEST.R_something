@@ -1,0 +1,20 @@
+29929
+
+sar<- readFasta ("./data/-2-Cov_FASTA_Alignment_April6_20_vshort.txt")
+
+acceptedChar=c("A","a","C","c","T","t","G","g")
+ignoredPos=vector('numeric')
+acceptedChar=c(acceptedChar, "-")
+
+MT259 <- lapply(sar[["MT259238"]], function(x) {x %in% acceptedChar} )
+MT205 <- lapply(sar[["MT2059259"]], function(x) {x %in% acceptedChar} )
+MT256 <- lapply(sar[["MT256924"]], function(x) {x %in% acceptedChar} )
+
+
+for (i in 1:length(MT205)){
+ print(paste("position: ", i))
+ print(paste("MT259238: ", sar["MT259238"][[1]][[i]], ", Include: ", MT259[[i]]))
+ print(paste("MT2059259: ", sar["MT2059259"][[1]][[i]], ", Include: ", MT205[[i]]))
+ print(paste("MT256924: ", sar["MT256924"][[1]][[i]], ", Include: ", MT256[[i]]))
+ readline()
+}
