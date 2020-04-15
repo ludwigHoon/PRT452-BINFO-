@@ -229,7 +229,13 @@ present.percent<-function(seq, target, result){
 			print(result[[a]])
 			print("Residual:")
 			res=percent.residual(seq, target, result[[a]][[level]]$position)
+			comb = percent.pattern(seq, list(), result[[a]][[level]]$position)
 			print(res)
+			print(paste("Sequence at final level positions: ", comb[[target]], sep=''))
+			for (co in unique(comb)){
+				print(paste(co, " :", sep=''))
+				print(names(which(comb == co)))
+			}
 			cat('----------\n\n')
 		}
 	}
