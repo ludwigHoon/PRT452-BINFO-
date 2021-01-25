@@ -64,8 +64,7 @@ processAllele<-function(seq){
 #' @param dashIgnore whether to treat '-' as another type
 #' @return Will return a list of positions that need to be ignored.
 #' @export
-flagPosition<-function(proSeq, dashIgnore=TRUE){
-	acceptedChar=c("A","a","C","c","T","t","G","g")
+flagPosition<-function(proSeq, dashIgnore=TRUE, acceptedChar=c("A","a","C","c","T","t","G","g")){
 	ignoredPos=vector('numeric')
 	if (dashIgnore==FALSE) acceptedChar=c(acceptedChar, "-")
 	
