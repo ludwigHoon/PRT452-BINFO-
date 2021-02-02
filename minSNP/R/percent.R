@@ -93,7 +93,7 @@ distinct<-function(seq, tNames, exc=NULL){
 #' @param excluded is the positions that are excluded from computation
 #' @return Will returns percentage of dissimilarity and the position.
 #' @export
-similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
+similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, bp=SerialParam()){
     for (n in targets){
 		if (is.null(seq[[n]])){
 			return(NULL)
@@ -118,18 +118,16 @@ similar.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL){
 	for(a in 1:level){
 	curRes=list()
 	
-	explored=c(explored, excluded)
-	curRes <- foreach(position = 1:length(seq[[1]]), .packages = 'minSNP') %dopar% {
+	pPos <- function(position, explored){
 		if (position %in% explored){
-			#print(paste("skip:", position))
 			return(list(position=position, value=0))}
 		ctype=percent.pattern(seq, type, position)
-		#print(paste("ctype: ", ctype))
 		percent=percent.calculate(ctype, targets)
-		#print(paste("Percent: ", percent))
-		return(list(position=position, value=percent)	)
+		return(list(position=position, value=percent))
 	}
-	#print(paste("CURRES: ", curRes))
+
+	explored=c(explored, excluded)
+	curRes <- bplapply(1:length(seq[[1]]), pPos, BPPARAM=bp, explored=explored)
 	for (a in explored){ curRes[[a]]=list(position=a, value=0)}
 		pos=list.order(curRes, (value))[1]
 		index=as.numeric(curRes[[pos]]['value'])
@@ -190,7 +188,7 @@ percent.residual<-function(seq, targets, positions=NULL){
 #' @return Will returns percentage of dissimilarity and the position
 #' as well as the residual positions (i.e. those positions with 100% on their own).
 #' @export
-branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, numRes=1){
+branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, numRes=1, bp=SerialParam()){
     if(numRes<=0){numRes=1}
     result=list()
 	num=1
@@ -200,7 +198,7 @@ branch.percent<-function(seq, targets, level=1, included=NULL, excluded=NULL, nu
 	num=num+1
 	### TO CHECK***
 	while(num<=numRes){
-		res=similar.percent(seq, targets, level, included, excluded)
+		res=similar.percent(seq, targets, level, included, excluded, bp)
 		if(is.null(res)){break}
 		result[[paste('result', num, sep= ' ')]]=res
 		excluded=c(excluded, res[[1]]$'position')

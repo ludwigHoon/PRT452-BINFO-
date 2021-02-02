@@ -49,7 +49,7 @@ simpson.pattern<-function(seq, position, appended=NULL)
 #' @param excluded is the positions that are excluded from computation
 #' @return Will returns simpson's index and the position.
 #' @export
-similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
+similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL, bp=SerialParam()){
 	N=length(seq)
 	result=list()
 	lvl=1
@@ -73,22 +73,25 @@ similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
 	explored=c(explored, excluded)
 	positions=1:length(seq[[1]])
 	positions=positions[!positions %in% explored]
-	curRes <- foreach(position= positions, .packages = 'minSNP') %dopar% {
-		if (position %in% explored){list(position=position, value=-1)}else{
-		type=simpson.pattern(seq, position, appended)
-		simpIndex=simpson.calculate(type, N)
-		list(position=position, value=simpIndex)
+	dPos <- function (position, explored){
+		if (position %in% explored){
+			list(position=position, value=-1)
+		}else{
+			type=simpson.pattern(seq, position, appended)
+			simpIndex=simpson.calculate(type, N)
+			list(position=position, value=simpIndex)
 		}
+	}
+	curRes <- bplapply(positions, dPos, BPPARAM = bp, explored=explored);
+	position=list.order(curRes, (value))[1]
+	index=as.numeric(curRes[[position]]['value'])
+	position=curRes[[position]]$position
+	result[[lvl]]=list(position=position,index=index)
+	lvl=lvl+1
+	for(al in 1:length(seq)){
+		appended[[getName(seq[[al]])]]=paste(appended[[getName(seq[[al]])]], seq[[al]][position], sep="")
 		}
-		position=list.order(curRes, (value))[1]
-		index=as.numeric(curRes[[position]]['value'])
-		position=curRes[[position]]$position
-		result[[lvl]]=list(position=position,index=index)
-		lvl=lvl+1
-		for(al in 1:length(seq)){
-			appended[[getName(seq[[al]])]]=paste(appended[[getName(seq[[al]])]], seq[[al]][position], sep="")
-			}
-		explored=c(explored, position)
+	explored=c(explored, position)
 	}
 
 	return(result)
@@ -105,7 +108,7 @@ similar.simpson <-function(seq, level=1, included=NULL, excluded=NULL){
 #' @param numRes is the number of result to be returned.
 #' @return Will returns simpson's index and the position.
 #' @export
-branch.simpson <-function(seq, level=1, included=NULL, excluded=NULL, numRes=1){
+branch.simpson <-function(seq, level=1, included=NULL, excluded=NULL, numRes=1, bp=SerialParam()){
 	if(numRes<=0){numRes=1}
 	result=list()
 	num=1
@@ -115,7 +118,7 @@ branch.simpson <-function(seq, level=1, included=NULL, excluded=NULL, numRes=1){
 	
 	while(num<=numRes){
 		excluded=c(excluded, res[[1]]$'position')
-		res=similar.simpson(seq, level, included, excluded)
+		res=similar.simpson(seq, level, included, excluded, bp=bp)
 		result[[paste('result', num, sep= ' ')]]=res
 		num=num+1
 	}
